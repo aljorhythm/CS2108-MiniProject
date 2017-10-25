@@ -63,15 +63,52 @@ def save_jams(jamsfile, notes, track_duration, orig_filename):
     jam.save(jamsfile)
 
 
+def rangeToNotes(notes, pitchRange):
+    # returns an array of 4 number, the nth percentile of pitch range
+    previous = 0
+    pitchQuantile = []
+    pitches = [note[2] for note in notes]
+
+    for q in pitchRange:
+        q = previous + q * 100
+        v = np.percentile(pitches, q)
+        print ("Quantile: %d, Value: %d" % (q, v))
+        pitchQuantile.append(v)
+        previous = q
+
+    return pitchQuantile
+
+
+def trackOfPitch(pitch, pitchQuantile):
+    # Determine which track the pitch falls under
+    i = 0
+    for q in pitchQuantile:
+        if pitch <= q:
+            return i
+        i = i + 1
+    return i
+
+
 def save_midi(outfile, notes, tempo):
 
-    track = 0
-    time = 0
-    midifile = MIDIFile(1)
+    # track 1 - pitches in first 50th percentile of pitch range of the song
+    # track 2 - pitches in 50 - 70th percentile of pitch range of the song
+    # track 3 - pitches in 70 - 80th percentile of pitch range of the song
+    # track 4 - pitches greater than 80th percentile of pitch range of the song
+    pitchRange = [0.5, 0.2, 0.1, 0.2]
+    nTracks = len(pitchRange)
 
-    # Add track name and tempo.
-    midifile.addTrackName(track, time, "MIDI TRACK")
-    midifile.addTempo(track, time, tempo)
+    # an array of 4 number, the nth (50th, 70th, 80th, 100th) percentile of pitch range
+    pitchQuantile = rangeToNotes(notes, pitchRange)
+
+    tracks = range(nTracks)
+    time = 0
+    midifile = MIDIFile(nTracks)
+
+    # Add Track name and Tempo
+    for track in tracks:    
+        midifile.addTrackName(track, time, "MIDI TRACK %d" % (track))
+        midifile.addTempo(track, time, tempo)
 
     channel = 0
     volume = 100
@@ -81,6 +118,11 @@ def save_midi(outfile, notes, tempo):
         duration = note[1] * (tempo/60.)
         # duration = 1
         pitch = note[2]
+
+        # Determine which track the note goes to.
+        track = trackOfPitch(pitch, pitchQuantile)
+
+        # Add note to track
         midifile.addNote(track, channel, pitch, onset, duration, volume)
 
     # And write it to disk.
