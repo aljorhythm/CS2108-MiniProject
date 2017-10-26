@@ -6,8 +6,8 @@ Code space to test out libraries, download files etc.
 
 ### Set up 
 
-` brew install youtube-dl `
-` brew install libav `
+- ` brew install youtube-dl `
+- ` brew install libav `
 
 
 #### Choose Youtube Videos
