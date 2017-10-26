@@ -1,19 +1,11 @@
-# Experiments
+# Experiements
 
-Code space to test out libraries, download files etc.
+### Tools 
 
-## Download youtube videos
+- `youtube-dl`
+- `waon`
 
-### Set up 
+### Wav and MIDI files
 
-- ` brew install youtube-dl `
-- ` brew install libav `
-
-
-#### Choose Youtube Videos
-
-modify download-yt-wavs.py
-
-### As .wav
-
-` python download-yt-wavs.py `
+- `.wav` : `./wav-files/`
+- `.mid` : `./midis/`
