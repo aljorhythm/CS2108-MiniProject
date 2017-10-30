@@ -2,6 +2,8 @@
 
 from subprocess import call
 
+wav_dir = "../wav-files/"
+
 youtube_links = [{
     "link": "https://www.youtube.com/watch?v=LRP8d7hhpoQ"
 }, {
@@ -10,4 +12,9 @@ youtube_links = [{
 
 for youtube_link in youtube_links:
     print "downloading " + youtube_link["link"]
-    call(["youtube-dl", youtube_link["link"], "-o", 'wav-files/%(title)s.%(ext)s', "--extract-audio", "--audio-format", "wav"])
+    call(["youtube-dl", youtube_link["link"], 
+    	"-o", 
+    	"".join((wav_dir, "%(title)s.%(ext)s")), 
+    	"--extract-audio", 
+    	"--audio-format", 
+    	"wav"])
