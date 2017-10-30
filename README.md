@@ -17,3 +17,9 @@ pip2 install jams
 - Also install python-midi-master
 
 See [experiments/README.md](experiments/README.md)
+
+# Downloading youtube files
+
+## as wav
+
+``` youtube-dl https://www.youtube.com/watch?v=7Bz2E8KxedM -x --audio-format wav ```
