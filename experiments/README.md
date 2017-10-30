@@ -1,17 +1,13 @@
-# Experiments
+# Experiements
 
-Code space to test out libraries, download files etc.
+### Tools 
 
-## Download youtube videos
+- `youtube-dl`
+- `waon`
 
-### Set up 
+### Wav and MIDI files
 
-``` brew install youtube-dl ```
+- `.wav` => `./wav-files/`
+- `.mid` => `./midis/`
 
-#### Choose Youtube Videos
-
-modify download-yt-wavs.py
-
-### As .wav
-
-``` python download-yt-wavs.py ```
+To include a specific `.wav` or `.mid` modify the `.gitignore` in respective folder
