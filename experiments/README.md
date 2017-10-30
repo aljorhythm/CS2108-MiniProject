@@ -14,5 +14,9 @@ To include a specific `.wav` or `.mid` modify the `.gitignore` in respective fol
 
 ### python-midi-master
 
+In folder python-midi-master/.
+
+Required for midi_properties.py
+
 #### Installation
 ```python setup.py install ```
