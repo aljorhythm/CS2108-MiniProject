@@ -11,3 +11,8 @@
 - `.mid` => `./midis/`
 
 To include a specific `.wav` or `.mid` modify the `.gitignore` in respective folder
+
+### python-midi-master
+
+#### Installation
+```python setup.py install ```
