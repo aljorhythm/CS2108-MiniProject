@@ -5,6 +5,10 @@ import os
 from subprocess import call
 
 wavs_dir = '../wav-files/'
+midi_dir = '../midis/'
+
+if not os.path.exists(midi_dir):
+    os.makedirs(midi_dir)
 
 for dir_name, dir_list, filelist in os.walk(wavs_dir):
     for filename in [filename for filename in filelist if '.wav' in filename]:
@@ -26,7 +30,7 @@ for dir_name, dir_list, filelist in os.walk(wavs_dir):
         for options in options_list:
             args = options["args"]
             suffix = options['suffix']
-            output_filepath = 'midis/' + filename_wo_ext + " - " + suffix + ".mid"
+            output_filepath = midi_dir + filename_wo_ext + " - " + suffix + ".mid"
             if not os.path.isfile(output_filepath):
                 print "converting {} to {} with args {}".format(filepath, output_filepath, args)
                 call(["waon", "-i", filepath, "-o", output_filepath] + args)
