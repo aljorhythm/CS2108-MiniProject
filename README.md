@@ -37,24 +37,8 @@ Install Haskall Platform. Note that harmtrace requires an old version of ghc
 
 ## Installation
 
-
 ``` sh
-brew install stack
-```
-
-Make sure /Users/<user>/.stack/global-project/stack.yaml has correct resolver
-```
-flags: {}
-extra-package-dbs: []
-packages: []
-extra-deps: []
-resolver: ghc-7.10.3
-```
-
-``` sh
-cd <harmtrace source folder>
-stack solver --update-config
-stack build
+cabal install HarmTrace
 ```
 
 # Converting to MIDI
