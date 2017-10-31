@@ -9,10 +9,22 @@ pp = pprint.PrettyPrinter(indent=4)
 diatonic_scale = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
 keys = [np.roll(diatonic_scale, i) for i in range(0, 11)]
 
+
 # assign more weight to tonal root
 tonal_root_weight_addition = 2
+seventh_degree_weight_addition = 1.5
+root_triad_addition = 1.5
+
 for index, key in enumerate(keys):
-  key[index] += tonal_root_weight_addition
+  tonal_root = index
+  key[tonal_root] += tonal_root_weight_addition
+
+  # 3rd and 5th degree
+  key[(index + 4) % 11] += root_triad_addition
+  key[(index + 7) % 11] += root_triad_addition
+
+  # seventh degree
+  key[(index + 11) % 11] += seventh_degree_weight_addition
 
 pitches = [
             'c',
@@ -48,10 +60,10 @@ class KeyUtils():
         for key_index in range(0, len(keys)):
             key_letter = pitches[key_index]
             pitches_numbers = filter(
-                lambda scale_degree: keys[key_index][scale_degree] == 1, range(len(keys[key_index])))
+                lambda scale_degree: keys[key_index][scale_degree] >= 1, range(len(keys[key_index])))
             letters = [pitches[pitch_number]
                        for pitch_number in pitches_numbers]
-            print key_letter + "\t" + ", ".join(letters)
+            print key_letter + "\t" + "\t ".join(letters)
         print "-------------------------------\n"
 
     @staticmethod
@@ -81,7 +93,7 @@ class MidiProperties():
                         pitch_number = event.get_pitch()
                         reduced_pitch_number = KeyUtils.get_absolute_pitch(
                             pitch_number)
-                        print pitch_number, reduced_pitch_number, KeyUtils.get_all_pitches()[reduced_pitch_number]
+                        # print pitch_number, reduced_pitch_number, KeyUtils.get_all_pitches()[reduced_pitch_number]
                         self.notes.append(reduced_pitch_number)
         return self.notes
 
@@ -102,15 +114,19 @@ class MidiProperties():
         if self.sanitized_pitch_counts is None:
 
             count_threshold_percentage = 0.05
-            count_threshold = count_threshold_percentage * self.get_notes_count()
+            count_threshold = max(count_threshold_percentage * self.get_notes_count(), 2)
 
             self.sanitized_pitch_counts = [
-                0 if song_pitch_count < count_threshold else song_pitch_count for song_pitch, song_pitch_count in enumerate(self.get_pitch_counts())]
+                0 if song_pitch_count <= count_threshold else song_pitch_count for song_pitch, song_pitch_count in enumerate(self.get_pitch_counts())]
 
         return self.sanitized_pitch_counts
 
-    def get_similar_keys(self):
-        return cosine_similarity([self.get_pitch_counts()], KeyUtils.get_keys())[0]
+    def get_similar_keys(self, normalize=False):
+        key_similarities = cosine_similarity([self.get_pitch_counts()], KeyUtils.get_keys())[0]
+        keys_sorted_indexes = np.argsort(key_similarities)
+        keys_sorted_indexes = np.flip(keys_sorted_indexes, 0)
+        return (keys_sorted_indexes , [key_similarities[i] for i in keys_sorted_indexes])
+          
 
 
 if __name__ == "__main__":
@@ -129,8 +145,8 @@ if __name__ == "__main__":
 
     # find similarities
 
-    key_similarities = midi_properties.get_similar_keys()
-    print key_similarities
-    keys_sorted_indexes = np.argsort(key_similarities)
-    for key_index in np.flip(keys_sorted_indexes, 0):
-        print "{}\t: {}".format(pitches[key_index], key_similarities[key_index])
+    print "\nResults"
+    keys_sorted_indexes, key_similarities = midi_properties.get_similar_keys()
+    for sort_index, key_similarity in enumerate(key_similarities):
+        print "{}\t: {}".format(pitches[keys_sorted_indexes[sort_index]], key_similarity)
+    
