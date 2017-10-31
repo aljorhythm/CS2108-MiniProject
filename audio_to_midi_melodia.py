@@ -95,7 +95,7 @@ def save_midi(outfile, notes, tempo):
     # track 2 - pitches in 50 - 70th percentile of pitch range of the song
     # track 3 - pitches in 70 - 80th percentile of pitch range of the song
     # track 4 - pitches greater than 80th percentile of pitch range of the song
-    pitchRange = [0.5, 0.2, 0.1, 0.2]
+    pitchRange = [1.0]
     nTracks = len(pitchRange)
 
     # an array of 4 number, the nth (50th, 70th, 80th, 100th) percentile of pitch range
