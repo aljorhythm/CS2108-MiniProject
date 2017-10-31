@@ -72,6 +72,11 @@ class KeyUtils():
         # C starts on 24
         python_midi_pitch_offset = 26
         return (pitch_number - python_midi_pitch_offset) % 11
+    
+    @staticmethod
+    def pitch_numbers_to_letters(pitch_numbers):
+      pitch_letters = KeyUtils.get_all_pitches()
+      return [pitch_letters[number] for number in pitch_numbers]
 
 
 class MidiProperties():
