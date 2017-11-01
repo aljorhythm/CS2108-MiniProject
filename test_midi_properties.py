@@ -5,7 +5,7 @@ from midi_properties import KeyUtils
 import os
 
 
-class TestStringMethods(unittest.TestCase):
+class TestMidiProperties(unittest.TestCase):
 
     def test_midi_properties(self):
         midi_dir = 'data/'
