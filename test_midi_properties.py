@@ -7,7 +7,7 @@ import os
 
 class TestStringMethods(unittest.TestCase):
 
-    def test_upper(self):
+    def test_midi_properties(self):
         midi_dir = 'data/'
 
         if not os.path.exists(midi_dir):
@@ -33,7 +33,6 @@ class TestStringMethods(unittest.TestCase):
         print "Correct Results:\n" + "\n".join(success)
         msg = "\nWrong Results:\n" + "\n".join([err["filepath"] + "\n" + "\t".join(err["results"]) for err in errors])
         self.assertEqual(errors, [], msg = msg)
-
 
 if __name__ == '__main__':
     unittest.main()
