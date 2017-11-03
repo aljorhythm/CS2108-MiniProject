@@ -1,0 +1,16 @@
+* { font-family: sans-serif; }
+.button { 
+	border: none; 
+	border-radius: 20px; 
+	padding: 30px; 
+	font-size: 16px; 
+	cursor: pointer; 
+	color: white; 
+	width: 100px; 
+	height: 20px; 
+	text-align: center;
+	display: inline-block;
+}
+.button:hover { opacity: 0.5; }
+.start { background-color: #45B29D; /* Green */ box-shadow: inset 0px -5px #34A18C; }
+.stop { background-color: #DF5A49; /* Red */ box-shadow: inset 0px -5px #CE4938;}
