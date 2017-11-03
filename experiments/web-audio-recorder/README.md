@@ -1,12 +1,13 @@
 # Web Audio Recorder
 
 ## Idea
-
-`navigator.mediaDevices.getUserMedia` 
-	--> `AudioContext.createMediaStreamSource` 
-		--> `AudioContext.createScriptProcessor` 
-			--> `LameJs` (Web worker)
-				--> `Mp3`
+```
+navigator.mediaDevices.getUserMedia
+	--> AudioContext.createMediaStreamSource
+		--> AudioContext.createScriptProcessor 
+			--> LameJs (Web worker)
+				--> Mp3
+```
 
 ## Usage
 

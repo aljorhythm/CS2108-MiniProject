@@ -18,5 +18,11 @@ In folder python-midi-master/.
 
 Required for midi_properties.py
 
+### web-audio-recorder
+
+In Folder web-audio-recorder/.
+
+A web interface to record and download recorded voice as mp3
+
 #### Installation
 ```python setup.py install ```
