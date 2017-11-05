@@ -4,6 +4,7 @@
 import os
 import librosa
 from audio_to_midi_melodia import audio_to_midi_melodia
+from subprocess import call
 
 wavs_dir = 'data/'
 midi_dir = 'data/'
