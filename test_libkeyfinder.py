@@ -2,6 +2,8 @@ import unittest
 import os
 import subprocess
 
+from midi_properties import MidiProperties
+from midi_properties import KeyUtils
 
 class TestLibKeyFinder(unittest.TestCase):
 
@@ -18,16 +20,17 @@ class TestLibKeyFinder(unittest.TestCase):
                 print "Checking {}".format(filepath)
                 expected_key = filename.split("-")[0]
                 most_similar_key = subprocess.check_output(['keyfinder-cli', filepath]).strip()
-                if most_similar_key != expected_key:
+                if not KeyUtils.are_keys_equal(most_similar_key, expected_key):
                     errors.append({
                         "filepath": filepath,
-                        "expected": expected_key,
-                        "results": most_similar_key
+                        "expected": "'" + expected_key + "'",
+                        "results": "'" + most_similar_key + "'",
+                        "truth" : KeyUtils.are_keys_equal(most_similar_key, expected_key)
                     })
                 else:
                     success.append(filepath)
         print "Correct Results:\n" + "\n".join(success)
-        msg = "\nWrong Results:\n" + "\n".join([err["filepath"] + ", expected " + err["expected"] + "\n" + err["results"] for err in errors])
+        msg = "\nWrong Results:\n {}" .format("\n".join([err["filepath"] + " " + str(err["truth"]) + ", expected " + err["expected"] + "\n" + err["results"] for err in errors]))
         self.assertEqual(errors, [], msg = msg)
 
 if __name__ == '__main__':
