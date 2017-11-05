@@ -7,6 +7,19 @@ import os
 
 class TestMidiProperties(unittest.TestCase):
 
+    def test_get_absolute_pitch(self):
+        pairs = [
+          [24, 0],
+          [25, 1],
+          [60, 0],
+          [69, 9],
+          [95, 11]
+        ]
+        for pair in pairs:
+          midi_note = pair[0]
+          absolute_number = pair[1]
+          self.assertEqual(KeyUtils.get_absolute_pitch(midi_note), absolute_number)
+
     def test_get_standard_key(self):
         self.assertEqual(KeyUtils.get_standard_key('Am'), 'C')
         self.assertEqual(KeyUtils.get_standard_key('Bm'), 'D')
