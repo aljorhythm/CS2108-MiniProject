@@ -1,4 +1,4 @@
-# use waon to convert wavs to midi
+# use waon and melodia to convert wavs to midi
 # wav file will not be converted if midi is found
 
 import os
