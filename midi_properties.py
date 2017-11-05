@@ -5,26 +5,10 @@ import argparse
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
+# diatonic_scale = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1] # equal weight for every scale degree
+diatonic_scale = [10, 0, 2, 0, 10, 4, 0, 2, 0, 2, 0, 6] # this one has weights
 
-diatonic_scale = [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1]
 keys = [np.roll(diatonic_scale, i) for i in range(0, 11)]
-
-
-# assign more weight to tonal root
-tonal_root_weight_addition = 2
-seventh_degree_weight_addition = 1.5
-root_triad_addition = 1.5
-
-for index, key in enumerate(keys):
-  tonal_root = index
-  key[tonal_root] += tonal_root_weight_addition
-
-  # 3rd and 5th degree
-  key[((index + 1 + 4) % 12) - 1] += root_triad_addition
-  key[((index + 1 + 7) % 12) - 1] += root_triad_addition
-
-  # seventh degree
-  key[((index + 1 + 11) % 12) - 1] += seventh_degree_weight_addition
 
 pitches = [
             'C',
