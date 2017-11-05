@@ -75,13 +75,23 @@ class KeyUtils():
     def get_absolute_pitch(pitch_number):
         # https://newt.phys.unsw.edu.au/jw/notes.html
         # C starts on 24
-        python_midi_pitch_offset = 26
-        return (pitch_number - python_midi_pitch_offset) % 11
+        python_midi_pitch_offset = 24
+        return (pitch_number - python_midi_pitch_offset) % 12
     
     @staticmethod
     def pitch_numbers_to_letters(pitch_numbers):
       pitch_letters = KeyUtils.get_all_pitches()
       return [pitch_letters[number] for number in pitch_numbers]
+
+    #flats to sharps
+    @staticmethod
+    def flat_to_sharp(note):
+      if(note.endswith('b')):
+        note = note.split('b')[0]
+        key_index = KeyUtils.get_all_pitches().index(note) - 1
+        note = KeyUtils.get_all_pitches()[key_index]
+      
+      return note
 
     ##
     #  Converts minor keys to their relative majors,
@@ -90,19 +100,15 @@ class KeyUtils():
     ##
     @staticmethod
     def get_standard_key(key):
+      
       #minor to major
       if(key.endswith('m')):
-        root_note = key.split('m')[0]
+        root_note = KeyUtils.flat_to_sharp(key.split('m')[0])
         minor_index = KeyUtils.get_all_pitches().index(root_note)
         major_index = minor_index + 3
         key = KeyUtils.get_all_pitches()[((major_index + 1) % 12) - 1]
-      
-      #flats to sharps
-      if(key.endswith('b')):
-        root_note = key.split('b')[0]
-        key_index = KeyUtils.get_all_pitches().index(root_note) - 1
-        key = KeyUtils.get_all_pitches()[key_index]
-           
+      else:
+        key = KeyUtils.flat_to_sharp(key)
       return key
 
     # keys are reduced to standard key and compared
