@@ -20,25 +20,25 @@ for index, key in enumerate(keys):
   key[tonal_root] += tonal_root_weight_addition
 
   # 3rd and 5th degree
-  key[(index + 4) % 11] += root_triad_addition
-  key[(index + 7) % 11] += root_triad_addition
+  key[((index + 1 + 4) % 12) - 1] += root_triad_addition
+  key[((index + 1 + 7) % 12) - 1] += root_triad_addition
 
   # seventh degree
-  key[(index + 11) % 11] += seventh_degree_weight_addition
+  key[((index + 1 + 11) % 12) - 1] += seventh_degree_weight_addition
 
 pitches = [
-            'c',
-            'c#',
-            'd',
-            'd#',
-            'e',
-            'f',
-            'f#',
-            'g',
-            'g#',
-            'a',
-            'a#',
-            'b'
+            'C',
+            'C#',
+            'D',
+            'D#',
+            'E',
+            'F',
+            'F#',
+            'G',
+            'G#',
+            'A',
+            'A#',
+            'B'
         ]
 
 class KeyUtils():
@@ -66,6 +66,11 @@ class KeyUtils():
             print key_letter + "\t" + "\t ".join(letters)
         print "-------------------------------\n"
 
+        print "Weights:\n"
+        for key_index in range(0, len(keys)):
+            print "Key {},  \t{} notes with weights: \t {}".format(KeyUtils.get_all_pitches()[key_index], len(filter(lambda weight: weight >= 1, keys[key_index])), "\t".join([str(weight) for weight in keys[key_index]]))
+        print "-------------------------------\n"
+
     @staticmethod
     def get_absolute_pitch(pitch_number):
         # https://newt.phys.unsw.edu.au/jw/notes.html
@@ -77,6 +82,34 @@ class KeyUtils():
     def pitch_numbers_to_letters(pitch_numbers):
       pitch_letters = KeyUtils.get_all_pitches()
       return [pitch_letters[number] for number in pitch_numbers]
+
+    ##
+    #  Converts minor keys to their relative majors,
+    #  Converts flats to sharps
+    #  Returns lettered key, eg. A#
+    ##
+    @staticmethod
+    def get_standard_key(key):
+      #minor to major
+      if(key.endswith('m')):
+        root_note = key.split('m')[0]
+        minor_index = KeyUtils.get_all_pitches().index(root_note)
+        major_index = minor_index + 3
+        key = KeyUtils.get_all_pitches()[((major_index + 1) % 12) - 1]
+      
+      #flats to sharps
+      if(key.endswith('b')):
+        root_note = key.split('b')[0]
+        key_index = KeyUtils.get_all_pitches().index(root_note) - 1
+        key = KeyUtils.get_all_pitches()[key_index]
+           
+      return key
+
+    # keys are reduced to standard key and compared
+    @staticmethod
+    def are_keys_equal(key1, key2):
+      return KeyUtils.get_standard_key(key1) == KeyUtils.get_standard_key(key2)
+
 
 
 class MidiProperties():
@@ -135,6 +168,8 @@ class MidiProperties():
 
 
 if __name__ == "__main__":
+    KeyUtils.print_keys()
+    exit()
     parser = argparse.ArgumentParser()
     parser.add_argument("infile", help="Path to input midi file.")
     args = parser.parse_args()
