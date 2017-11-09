@@ -1,11 +1,10 @@
 const LameJs = require ("lameJs");
-var mp3Encoder,
+const WavEncoder = require ("wav-encoder");
+var params,
 	samples;
 
-function init (params) {
-	mp3Encoder = new LameJs.Mp3Encoder (params.channels, params.sampleRate, params.kbps);
+function init () {
 	samples = [new Float32Array(), new Float32Array()];
-
 	self.postMessage ({command: "init", status: 200});
 } 
 
@@ -19,7 +18,12 @@ function record (_samples, _channel) {
 	self.postMessage ({command: "record", status: 200});
 }
 
-function process () {
+function initLameJs (params) {
+	var mp3Encoder = new LameJs.Mp3Encoder (params.channels, params.sampleRate, params.kbps);
+	return mp3Encoder;
+}
+function processLameJs (params) {
+	var mp3Encoder = initLameJs(params);
 	var sampleBlockSize = 1152;
 	var left = samples[0];
 	var right = samples[1];
@@ -46,12 +50,33 @@ function process () {
 	self.postMessage ({command: "process", status: 200, data: mp3Data});
 }
 
+function initWavEncoder (params) {
+	var audioData = {
+		sampleRate: params.sampleRate
+	}
+	return audioData;
+}
+function processWavEncoder (params) {
+	var audioData = initWavEncoder(params);
+	audioData['channelData'] = samples;
+	WavEncoder.encode(audioData).then((buffer) => {
+		var blob = new Blob([buffer], {type: 'audio/wav'});
+		self.postMessage ({command: "process", status: 200, data: blob});
+	})
+}
+function process (type, params) {
+	switch (type) {
+		case "MP3": processLameJs (params); 	break;
+		case "WAV": processWavEncoder (params); break;
+		default: self.postMessage ({command: "process", status: 500});
+	}
+}
+
 self.onmessage = function (event) {
-	console.log(event);
 	var data = event.data;
 	switch (data.command) {
-		case "init"  	: init (data.params); 					break; 
+		case "init"  	: init (); 								break; 
 		case "record"	: record (data.samples, data.channel); 	break;
-		case "process" 	: process ();							break;
+		case "process" 	: process (data.type, data.params);		break;
 	}
 }
