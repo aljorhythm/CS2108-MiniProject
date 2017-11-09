@@ -33,6 +33,10 @@ class RecorderController extends Controller {
 	handleStartBtn () {
 		console.log ("Controller: Start"); 
 		this.player.play();
+		this.player.addEventListener("ended", () => {
+			console.log("Player Ended! Stopping Recording...");
+			this.stopBtn.click();
+		})
 		this.recorder.start().catch((err) => {
 			console.log(err);
 		});
