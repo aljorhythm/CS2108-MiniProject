@@ -3,8 +3,8 @@
 ## Usage
 
 ```
-	npm install
-	npm run start:dev
+npm install
+npm run start:dev
 ```
 
 ## How To Use
@@ -35,3 +35,12 @@
 ### 3. Transposed song Ready
 - **[Website]** Client receive Transposed Song Data in `base64` and create a new `<audio>` tag and `<a>` download link
 - **[User]** Sing along or Download song
+
+## Folder Structure 
+
+- `app` : Where all the js, css, html goes 
+- `app/dist` : Distribution files are
+- `app/build` : Build files, including all JS scripts
+- `app/src` : Src files for front end
+
+- `Server` : Server side code
