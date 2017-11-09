@@ -1,6 +1,5 @@
-const Recorder = require ("./Recorder/Recorder.Controller.js");
-
+const T = require ("./Transposer/Transposer.js");
 window.onload = function () {
-	new Recorder ();
+	new T();
 }
 
