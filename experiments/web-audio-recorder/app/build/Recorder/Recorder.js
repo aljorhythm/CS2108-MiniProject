@@ -1,93 +1,88 @@
 const LameJs = require ("lameJs");
 const RecorderWorker = require ("./Recorder.Worker.js");
+
 const OFF = -1;
 const RECORDING = 1;
 const IDLE = 0;
 
 class Recorder {
-	constructor () {
+	constructor (server) {
 
 		this.state;
-		this.samples;
-		this.mp3Encoder;
-		this.mp3Data;
+		this.stream;
+		this.streamPromises;
+		this.server = server;
+
+		this.params = {
+			channel: 2,
+			kbps: 128
+		}
 
 		this.init();
 	}
 
 	init () {
 		this.state = OFF;
-		this.samples = [];
-		this.mp3Encoder = null;
-		this.mp3Data = null;
+
 		this.worker = new RecorderWorker();
 		this.worker.onmessage = this.handleWorkerMessage.bind(this);
+
 		this.getRecordingTool().then(this.setupRecording.bind(this));
 	}
+
+	/************* Controls *********************/
 
 	on () {
 		this.state = IDLE;
 	}
+
 	start () { 
-		if (this.state == OFF) return; 
+		if (this.state == OFF || this.state == RECORDING) 
+			return Promise.reject ("Error: Recording already started"); 
+
 		this.state = RECORDING; 
+		return Promise.resolve();
 	}
 	stop () { 
-		if (this.state == OFF) return; 
+		if (this.state == OFF || this.state == IDLE) 
+			return Promise.reject("Error: Recording have yet started"); 
+
+		// this.stream[0].end();
+		// this.stream[1].end();
+
 		this.state = IDLE; 
 		
-		return this.getMp3Data(); 
+		return this.getAudioData("WAV"); 
 	}
+
+	/************* Actual Recording *********************/
 
 	getMp3Data () {
-		if (this.mp3Data == null) {
-			return this.requestMp3DataFromWorker().then((mp3Data) => { 
-				this.mp3Data = mp3Data;
-				return this.getMp3Data();
-			});
-		} else return Promise.resolve(this.mp3Data);
+		return this.requestAudioDataFromWorker("MP3");
 	}
 
-	processRecordedData () {
+	getWavData () {
+		return this.requestAudioDataFromWorker("WAV")
+	}
 
-		var sampleBlockSize = 1152;
-		var left = this.samples[0];
-		var right = this.samples[1];
-
-		var leftChunk, rightChunk, mp3buf;
-		var mp3Data = [];
-
-		return new Promise ((resolve, reject) => {
-			for (var i = 0; i < left.length; i += sampleBlockSize) {
-				leftChunk = left.subarray(i, i + sampleBlockSize);
-				rightChunk = right.subarray(i, i + sampleBlockSize);
-				mp3buf = this.mp3Encoder.encodeBuffer(leftChunk, rightChunk);
-				if (mp3buf.length > 0) {
-					mp3Data.push(mp3buf);
-				}
-			}
-			mp3buf = this.mp3Encoder.flush();   //finish writing mp3
-
-			if (mp3buf.length > 0) {
-			    mp3Data.push(mp3buf);
-			} else {
-				reject ("No Buffered Data");
-			}
-
-			resolve(mp3Data);
-		});
+	getAudioData (type) {
+		if (type == "MP3")
+			return this.getMp3Data ();
+		else return this.getWavData ();
 	}
 
 	getRecordingTool () {
 		return navigator.mediaDevices.getUserMedia({audio: true, video: false});
 	}
+
 	setupRecording (stream) {
 		var ctx = new AudioContext();
 		var source = ctx.createMediaStreamSource(stream);
 		var gain = ctx.createGain();
 		var scriptProcessor = ctx.createScriptProcessor(4096, 2, 2);
 
-		this.sendParamsToWorker (2, ctx.sampleRate, 128);
+		this.params['sampleRate'] = ctx.sampleRate;
+		this.initWorker ();
 
 		scriptProcessor.onaudioprocess = this.handleOnAudioProcess.bind(this);
 
@@ -101,28 +96,31 @@ class Recorder {
 
 		var inputBuffer = ape.inputBuffer;
 		var outputBuffer = ape.outputBuffer;
+
 		for (var channel = 0; channel < inputBuffer.numberOfChannels; channel++) {
 			var inputData = inputBuffer.getChannelData (channel);
 			var samples = [];
 
 			for (var sample = 0; sample < inputData.length; sample++) {
-				samples[sample] = inputData[sample] * 32767.5;
+				samples[sample] = inputData[sample];
 			}
 
-			
-			this.sendSamplesToWorker (samples, channel);
+			this.handleSamples(samples, channel);
 			
 		}
 	}
 
-	sendParamsToWorker (channel, sampleRate, kbps) {
+	handleSamples (samples, channel) {
+		this.sendSamplesToWorker (samples, channel);
+		// this.sendSamplesToServer (samples, channel);
+	}
+
+	/************* WORKER CONTROLLER *********************/
+
+	initWorker () {
+		// this.sendParamsToServer (channel, sampleRate, kbps);
 		this.worker.postMessage ({
-			command: "init",
-			params: {
-				channels: channel,
-				sampleRate: sampleRate,
-				kbps: kbps
-			}
+			command: "init"
 		})
 	}
 
@@ -134,10 +132,11 @@ class Recorder {
 		})
 	}
 
-	requestMp3DataFromWorker () {
-		
+	requestAudioDataFromWorker (type) {
 		this.worker.postMessage ({
-			command: "process"
+			command: "process",
+			type: type,
+			params: this.params
 		})
 		return new Promise ((resolve, reject) => {
 			this.workerPromise = function (mp3Data) {
@@ -150,10 +149,10 @@ class Recorder {
 		this.workerPromise (mp3Data);
 	}
 
+	// Function to handle messages returned from Worker
 	printStatus (msg) {
 		console.log ("Worker Message:\n\tCommand: " + msg.command + "\n\tStatus: " + msg.status);
 	}
-
 	handleWorkerMessage (e) {
 		var msg = e.data;
 		this.printStatus(msg);
