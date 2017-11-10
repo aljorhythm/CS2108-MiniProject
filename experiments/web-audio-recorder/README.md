@@ -29,7 +29,8 @@ npm run start:dev
 - **[Website]** Records User's voice upon `Start` till `Stop`
 - **[Website -> Webworker]** Convert `WebM` to `WAV`
 - **[Website]** Send POST request to `/analyse/<title>/<author>` with `WAV` file  in `base64` for `Server` to analyse 
-- **[Server]** Analyse and Transpose original song and return `Transposed Song`
+- !! Not done !! **[Server]** Analyse recording to find key and how much to transpose
+- **[Server]** Transpose original song and return `Transposed Song`
 - ***Proceed to Step 3***
 
 ### 3. Transposed song Ready
