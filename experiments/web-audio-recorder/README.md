@@ -2,9 +2,20 @@
 
 ## Usage
 
+Open 2 Terminal
+
+1st Terminal:
+
 ```
 npm install
 npm run start:dev
+```
+
+2nd Terminal:
+
+```
+cd server
+python server.py
 ```
 
 ## How To Use
