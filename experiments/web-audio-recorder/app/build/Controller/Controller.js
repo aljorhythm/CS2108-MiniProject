@@ -1,3 +1,4 @@
+const Loading = require ("../Components/Loading/Loading.js");
 class Controller {
 	constructor (target) {
 		this.current = false;

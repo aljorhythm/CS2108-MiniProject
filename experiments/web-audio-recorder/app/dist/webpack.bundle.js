@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -342,8 +342,8 @@ Encoder.fircoef = [-0.0207887 * 5, -0.0378413 * 5,
     0.10091 * 5, 0.151365 * 5, 0.187098 * 5];
 
 function Encoder() {
-    var NewMDCT = __webpack_require__(40);
-    var III_psy_ratio = __webpack_require__(41);
+    var NewMDCT = __webpack_require__(43);
+    var III_psy_ratio = __webpack_require__(44);
 
     var FFTOFFSET = Encoder.FFTOFFSET;
     var MPG_MD_MS_LR = Encoder.MPG_MD_MS_LR;
@@ -939,9 +939,9 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(58)
-var ieee754 = __webpack_require__(59)
-var isArray = __webpack_require__(23)
+var base64 = __webpack_require__(64)
+var ieee754 = __webpack_require__(65)
+var isArray = __webpack_require__(24)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2994,8 +2994,8 @@ var util = __webpack_require__(7);
 util.inherits = __webpack_require__(4);
 /*</replacement>*/
 
-var Readable = __webpack_require__(26);
-var Writable = __webpack_require__(30);
+var Readable = __webpack_require__(27);
+var Writable = __webpack_require__(31);
 
 util.inherits(Duplex, Readable);
 
@@ -3204,10 +3204,10 @@ var new_int = common.new_int;
 var new_int_n = common.new_int_n;
 var assert = common.assert;
 
-var IIISideInfo = __webpack_require__(43);
+var IIISideInfo = __webpack_require__(46);
 var ScaleFac = __webpack_require__(16);
-var NsPsy = __webpack_require__(44);
-var VBRSeekInfo = __webpack_require__(45);
+var NsPsy = __webpack_require__(47);
+var VBRSeekInfo = __webpack_require__(48);
 var III_psy_xmin = __webpack_require__(14);
 var Encoder = __webpack_require__(1);
 var L3Side = __webpack_require__(9);
@@ -8298,7 +8298,55 @@ module.exports = QuantizePVT;
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer) {let http = __webpack_require__ (60);
+const Loading = __webpack_require__ (85);
+class Controller {
+	constructor (target) {
+		this.current = false;
+		this.target = document.getElementById(target);
+	}
+
+	start () {
+		if (this.current) {
+			return console.log ("[Controller]: Already Started!");
+		} 
+		this.current = true;
+		this.target.classList.add("current");
+	}
+
+	stop () {
+		if (!this.current) {
+			return console.log ("[Controller]: Not Started!");
+		}
+		this.current = false;
+		this.target.classList.remove("current");
+	}
+
+	createDOMs (doms) {
+		var result = {};
+		var domInfo, dom;
+		for (var id in doms) {
+			domInfo = doms[id];
+			dom = document.createElement(domInfo.type);
+			dom.className = domInfo.classList.join(" ");
+			result[id] = dom;
+		}
+		return result;
+	}
+
+	getButton (id, onClick) {
+		var btn = document.getElementById(id);
+		btn.addEventListener ("click", onClick.bind(this));
+		return btn;
+	}
+}
+
+module.exports = Controller
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Buffer) {let http = __webpack_require__ (66);
 
 class Server {
 
@@ -8420,7 +8468,7 @@ module.exports = Server;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3).Buffer))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -8431,7 +8479,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
@@ -8507,20 +8555,20 @@ xhr = null // Help gc
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(26);
+exports = module.exports = __webpack_require__(27);
 exports.Stream = exports;
 exports.Readable = exports;
-exports.Writable = __webpack_require__(30);
+exports.Writable = __webpack_require__(31);
 exports.Duplex = __webpack_require__(6);
-exports.Transform = __webpack_require__(32);
-exports.PassThrough = __webpack_require__(68);
+exports.Transform = __webpack_require__(33);
+exports.PassThrough = __webpack_require__(74);
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8555,7 +8603,7 @@ var processNextTick = __webpack_require__(10);
 module.exports = Readable;
 
 /*<replacement>*/
-var isArray = __webpack_require__(23);
+var isArray = __webpack_require__(24);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -8565,7 +8613,7 @@ var Duplex;
 Readable.ReadableState = ReadableState;
 
 /*<replacement>*/
-var EE = __webpack_require__(27).EventEmitter;
+var EE = __webpack_require__(28).EventEmitter;
 
 var EElistenerCount = function (emitter, type) {
   return emitter.listeners(type).length;
@@ -8573,7 +8621,7 @@ var EElistenerCount = function (emitter, type) {
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(28);
+var Stream = __webpack_require__(29);
 /*</replacement>*/
 
 // TODO(bmeurer): Change this back to const once hole checks are
@@ -8595,7 +8643,7 @@ util.inherits = __webpack_require__(4);
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(63);
+var debugUtil = __webpack_require__(69);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -8604,8 +8652,8 @@ if (debugUtil && debugUtil.debuglog) {
 }
 /*</replacement>*/
 
-var BufferList = __webpack_require__(64);
-var destroyImpl = __webpack_require__(29);
+var BufferList = __webpack_require__(70);
+var destroyImpl = __webpack_require__(30);
 var StringDecoder;
 
 util.inherits(Readable, Stream);
@@ -8688,7 +8736,7 @@ function ReadableState(options, stream) {
   this.decoder = null;
   this.encoding = null;
   if (options.encoding) {
-    if (!StringDecoder) StringDecoder = __webpack_require__(31).StringDecoder;
+    if (!StringDecoder) StringDecoder = __webpack_require__(32).StringDecoder;
     this.decoder = new StringDecoder(options.encoding);
     this.encoding = options.encoding;
   }
@@ -8844,7 +8892,7 @@ Readable.prototype.isPaused = function () {
 
 // backwards compatibility.
 Readable.prototype.setEncoding = function (enc) {
-  if (!StringDecoder) StringDecoder = __webpack_require__(31).StringDecoder;
+  if (!StringDecoder) StringDecoder = __webpack_require__(32).StringDecoder;
   this._readableState.decoder = new StringDecoder(enc);
   this._readableState.encoding = enc;
   return this;
@@ -9534,7 +9582,7 @@ function indexOf(xs, x) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -9842,14 +9890,14 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(27).EventEmitter;
+module.exports = __webpack_require__(28).EventEmitter;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9927,7 +9975,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10003,12 +10051,12 @@ util.inherits = __webpack_require__(4);
 
 /*<replacement>*/
 var internalUtil = {
-  deprecate: __webpack_require__(67)
+  deprecate: __webpack_require__(73)
 };
 /*</replacement>*/
 
 /*<replacement>*/
-var Stream = __webpack_require__(28);
+var Stream = __webpack_require__(29);
 /*</replacement>*/
 
 /*<replacement>*/
@@ -10022,7 +10070,7 @@ function _isUint8Array(obj) {
 }
 /*</replacement>*/
 
-var destroyImpl = __webpack_require__(29);
+var destroyImpl = __webpack_require__(30);
 
 util.inherits(Writable, Stream);
 
@@ -10595,10 +10643,10 @@ Writable.prototype._destroy = function (err, cb) {
   this.end();
   cb(err);
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(65).setImmediate, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(71).setImmediate, __webpack_require__(2)))
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -10825,7 +10873,7 @@ function base64DetectIncompleteChar(buffer) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11045,10 +11093,29 @@ function done(stream, er, data) {
 }
 
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = function (target, audioData) {
+	var blob = new Blob([audioData], {type:"audio/wav"});
+	var url = window.URL.createObjectURL(blob);
+	
+	const audioEl = document.createElement('audio');
+    audioEl.controls = true;
+    const sourceEl = document.createElement('source');
+    sourceEl.src = url;
+    sourceEl.type = 'audio/wav';
+    audioEl.appendChild(sourceEl);
+    target.appendChild(audioEl);
+
+    return audioEl;
+}
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const T = __webpack_require__ (83);
+const T = __webpack_require__ (36);
 window.onload = function () {
 	new T();
 }
@@ -11056,12 +11123,85 @@ window.onload = function () {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Recorder = __webpack_require__ (35);
-const FD = __webpack_require__ (79);
-const Controller = __webpack_require__ (82)
+const RecorderController = __webpack_require__ (37);
+const SongPickerController = __webpack_require__ (62);
+const AudioPlayer = __webpack_require__ (34);
+const Loading = __webpack_require__ (85);
+const S = __webpack_require__ (23);
+
+class Transposer {
+	constructor () {
+		var server = new S("127.0.0.1", 5000);
+		this.server = server;
+		this.loadingAnimation = new Loading();
+		this.toTranspose;
+		this.singalongDOM = document.getElementById("singalong");
+		
+		this.spc = new SongPickerController (server, this);
+		this.spc.start();
+		this.rc = new RecorderController (server, this);
+	}
+
+	songpickerDone (song, player) {
+		this.toTranspose = song;
+		this.spc.stop();
+		this.rc.start(player);
+	}
+
+	recordingDone (blob) {
+		this.sendAudioBlobToServer(blob);
+	}
+
+	sendAudioBlobToServer (blob) {
+		var author = this.toTranspose.author;
+		var title = this.toTranspose.title;
+
+		var reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.addEventListener("load", () => {
+			this.server.POST("/analyse/" + title + "/" + author, reader.result, false)
+			.then(this.handleTransposedSong.bind(this))
+			.then(this.finish.bind(this))
+			.catch((e) => {
+				console.log ("Error: " + e);
+			});
+		})
+	}
+
+	handleTransposedSong (songdata) {
+		var target = document.getElementById("transposed");
+		var audioEl = AudioPlayer(target, songdata);
+		return Promise.resolve();
+	}
+
+	finish () {
+		this.rc.stop();
+		this.singalongDOM.classList.add("current");
+		this.loadend();
+		console.log ("End of workflow");
+	}
+
+	loading (msg) {
+		this.loadingAnimation.show(msg);
+	}
+
+	loadend () {
+		this.loadingAnimation.hide();
+	}
+}
+
+module.exports = Transposer;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Recorder = __webpack_require__ (38);
+const FD = __webpack_require__ (61);
+const Controller = __webpack_require__ (22);
 
 class RecorderController extends Controller {
 	constructor (server, transposer) {
@@ -11107,6 +11247,7 @@ class RecorderController extends Controller {
 		console.log ("Controller: Stop"); 
 		this.player.pause();
 		
+		this.transposer.loading("Analysing and Transposing...");
 		this.recorder.stop()
 		.then((blob) => {
 			this.createDownloadLink(blob);
@@ -11137,11 +11278,11 @@ class RecorderController extends Controller {
 module.exports = RecorderController;
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const LameJs = __webpack_require__ (36);
-const RecorderWorker = __webpack_require__ (57);
+const LameJs = __webpack_require__ (39);
+const RecorderWorker = __webpack_require__ (60);
 
 const OFF = -1;
 const RECORDING = 1;
@@ -11309,7 +11450,7 @@ class Recorder {
 module.exports = Recorder;
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -11328,18 +11469,18 @@ var new_int = common.new_int;
 var new_int_n = common.new_int_n;
 var assert = common.assert;
 
-Lame = __webpack_require__(37);
-Presets = __webpack_require__(49);
+Lame = __webpack_require__(40);
+Presets = __webpack_require__(52);
 GainAnalysis = __webpack_require__(17);
 QuantizePVT = __webpack_require__(21);
-Quantize = __webpack_require__(50);
+Quantize = __webpack_require__(53);
 Takehiro = __webpack_require__(20);
-Reservoir = __webpack_require__(54);
+Reservoir = __webpack_require__(57);
 MPEGMode = __webpack_require__(15);
 BitStream = __webpack_require__(19);
 var Encoder = __webpack_require__(1);
-var Version = __webpack_require__(55);
-var VBRTag = __webpack_require__(56);
+var Version = __webpack_require__(58);
+var VBRTag = __webpack_require__(59);
 
 function GetAudio() {
     var parse;
@@ -11511,7 +11652,7 @@ module.exports.WavHeader = WavHeader;
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -11531,12 +11672,12 @@ var new_int_n = common.new_int_n;
 var new_short_n = common.new_short_n;
 var assert = common.assert;
 
-var PsyModel = __webpack_require__(38);
-var LameGlobalFlags = __webpack_require__(42);
+var PsyModel = __webpack_require__(41);
+var LameGlobalFlags = __webpack_require__(45);
 var LameInternalFlags = __webpack_require__(8);
-var ATH = __webpack_require__(46);
-var ReplayGain = __webpack_require__(47);
-var CBRNewIterationLoop = __webpack_require__(48);
+var ATH = __webpack_require__(49);
+var ReplayGain = __webpack_require__(50);
+var CBRNewIterationLoop = __webpack_require__(51);
 var BitStream = __webpack_require__(19);
 var Tables = __webpack_require__(12);
 var Encoder = __webpack_require__(1);
@@ -13385,7 +13526,7 @@ module.exports = Lame;
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -13545,7 +13686,7 @@ var new_int = common.new_int;
 var new_int_n = common.new_int_n;
 var assert = common.assert;
 
-var FFT = __webpack_require__(39);
+var FFT = __webpack_require__(42);
 var Encoder = __webpack_require__(1);
 
 function PsyModel() {
@@ -16289,7 +16430,7 @@ module.exports = PsyModel;
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -16541,7 +16682,7 @@ module.exports = FFT;
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -17711,7 +17852,7 @@ module.exports = NewMDCT;
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //package mp3;
@@ -17727,7 +17868,7 @@ module.exports = III_psy_ratio;
 
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MPEGMode = __webpack_require__(15);
@@ -18002,7 +18143,7 @@ module.exports = LameGlobalFlags;
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18042,7 +18183,7 @@ module.exports = IIISideInfo;
 
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18089,7 +18230,7 @@ module.exports = NsPsy;
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports) {
 
 //package mp3;
@@ -18129,7 +18270,7 @@ module.exports = VBRSeekInfo;
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18214,7 +18355,7 @@ module.exports = ATH;
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18279,7 +18420,7 @@ module.exports = ReplayGain;
 
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18377,7 +18518,7 @@ module.exports = CBRNewIterationLoop;
 
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -18870,7 +19011,7 @@ module.exports = Presets;
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18918,9 +19059,9 @@ var new_int = common.new_int;
 var new_int_n = common.new_int_n;
 var assert = common.assert;
 
-var VBRQuantize = __webpack_require__(51);
-var CalcNoiseResult = __webpack_require__(52);
-var CalcNoiseData = __webpack_require__(53);
+var VBRQuantize = __webpack_require__(54);
+var CalcNoiseResult = __webpack_require__(55);
+var CalcNoiseData = __webpack_require__(56);
 var Encoder = __webpack_require__(1);
 var GrInfo = __webpack_require__(11);
 var L3Side = __webpack_require__(9);
@@ -20374,7 +20515,7 @@ module.exports = Quantize;
 
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports) {
 
 function VBRQuantize() {
@@ -20393,7 +20534,7 @@ module.exports = VBRQuantize;
 
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports) {
 
 //package mp3;
@@ -20426,7 +20567,7 @@ module.exports = CalcNoiseResult;
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -20446,7 +20587,7 @@ module.exports = CalcNoiseData;
 
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -20749,7 +20890,7 @@ module.exports = Reservoir;
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports) {
 
 function Version() {
@@ -20845,7 +20986,7 @@ module.exports = Version;
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var common = __webpack_require__(0);
@@ -21821,7 +21962,7 @@ module.exports = VBRTag;
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = function() {
@@ -21829,7 +21970,188 @@ module.exports = function() {
 };
 
 /***/ }),
-/* 58 */
+/* 61 */
+/***/ (function(module, exports) {
+
+/* eslint-env browser */
+module.exports = typeof self == 'object' ? self.FormData : window.FormData;
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const SongPicker = __webpack_require__ (63);
+const Controller = __webpack_require__ (22);
+const AudioPlayer = __webpack_require__ (34);
+
+class SongPickerController extends Controller {
+	constructor (server, transposer) {
+		super("songpicker");
+
+		this.transposer = transposer;
+		this.songpicker = new SongPicker(server);
+
+		this.canSelectSong;
+		this.playBtn;
+		this.dommeta;
+
+		this.initDom ();
+	}
+
+	start () {
+		super.start();
+		this.showDom();
+	}
+
+	initDom () {
+		this.dommeta = {
+			ul: {
+				songlist: {
+					type: "ul",
+					classList: ["songlist"]
+				}
+			},
+			li: {
+				song: {
+					type: "li",
+					classList: ["song"]
+				},
+
+				title: {
+					type: "p",
+					classList: ["song-title", "song-info"]
+				},
+
+				author: {
+					type: "p",
+					classList: ["song-author", "song-info"]
+				}
+			}
+		}
+		this.canSelectSong = true;
+		this.playBtn = document.getElementById("playbtn");
+	}
+
+	showDom () {
+		var songlistDOM = document.getElementById("songlist");
+		var ulDOM = this.createDOMs(this.dommeta.ul).songlist;
+
+		this.startLoading("Fetching Song List...");
+		this.songpicker.getSongList().then((songlist) => {
+			this.stopLoading();
+			for (var song in songlist) {
+				this.addSongDom(ulDOM, songlist[song]);
+			}
+		})
+		songlistDOM.appendChild(ulDOM);
+	}
+
+	addSongDom (songListDOM, song) {
+		var songDOMs = this.createDOMs(this.dommeta.li);
+		var songDOM = songDOMs.song,
+			titleDOM = songDOMs.title,
+			authorDOM = songDOMs.author;
+
+		titleDOM.innerHTML = song.title;
+		authorDOM.innerHTML = song.author;
+
+		songDOM.appendChild(titleDOM);
+		songDOM.appendChild(authorDOM);
+		songDOM.addEventListener("click", this.makeHandleSongClick(song).bind(this));
+
+		songListDOM.appendChild(songDOM);
+	}
+
+	makeHandleSongClick (song) {
+		return () => {
+			if (!this.canSelectSong) return;
+			this.startLoading("Fetching Song...");
+			this.songpicker.getSong(song).then((res) => {
+				this.setPlayButton (song, res);
+				this.stopLoading();
+			});
+		}
+	}
+
+	setPlayButton (song, res) {
+		if (res == undefined) {
+			console.log ("No Data!"); 
+			return;
+		}
+
+		this.createAudioPlayer (this.playBtn, song, res);
+	}
+
+	createAudioPlayer (target, song, audioData) {
+		var audioEl = AudioPlayer(target, audioData);
+	    this.transposer.songpickerDone(song, audioEl);
+	}
+
+	startLoading (msg) {
+		this.canSelectSong = false;
+		this.transposer.loading(msg);
+		console.log ("Start Loading");
+	}
+
+	stopLoading () {
+		this.canSelectSong = true;
+		this.transposer.loadend();
+		console.log ("Stop Loading");
+	}
+
+}
+
+module.exports = SongPickerController;
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const S = __webpack_require__(23);
+class SongPicker {
+	constructor (server) {
+		this.available;
+		this.server = server
+		this.initAvailable();
+	}
+
+	initAvailable () {
+		
+	}
+
+	getSongList () {
+		if (this.available == null) {
+			return this.requestSongList();
+		} else return Promise.resolve (this.available);
+	}
+
+	requestSongList () {
+		return this.server.GET("/songlist").then((res) => {
+			var songlist = res.msg;
+			this.available = songlist;
+			return Promise.resolve(this.available);
+		})
+	}
+
+	getSong (song) {
+		return this.requestSong (song);
+	}
+
+	requestSong (song) {
+		var url = encodeURI("/songlist/" + song.title + "/" + song.author);
+
+		return this.server.GET(url, null, false)
+		.catch((err) => {
+			console.log ("Error: " + err.msg);
+		})
+	}
+}
+
+module.exports = SongPicker;
+
+/***/ }),
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21950,7 +22272,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 59 */
+/* 65 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -22040,13 +22362,13 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 60 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(61)
-var extend = __webpack_require__(70)
-var statusCodes = __webpack_require__(71)
-var url = __webpack_require__(72)
+/* WEBPACK VAR INJECTION */(function(global) {var ClientRequest = __webpack_require__(67)
+var extend = __webpack_require__(76)
+var statusCodes = __webpack_require__(77)
+var url = __webpack_require__(78)
 
 var http = exports
 
@@ -22125,14 +22447,14 @@ http.METHODS = [
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 61 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(24)
+/* WEBPACK VAR INJECTION */(function(Buffer, global, process) {var capability = __webpack_require__(25)
 var inherits = __webpack_require__(4)
-var response = __webpack_require__(62)
-var stream = __webpack_require__(25)
-var toArrayBuffer = __webpack_require__(69)
+var response = __webpack_require__(68)
+var stream = __webpack_require__(26)
+var toArrayBuffer = __webpack_require__(75)
 
 var IncomingMessage = response.IncomingMessage
 var rStates = response.readyStates
@@ -22438,12 +22760,12 @@ var unsafeHeaders = [
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3).Buffer, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
-/* 62 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(24)
+/* WEBPACK VAR INJECTION */(function(process, Buffer, global) {var capability = __webpack_require__(25)
 var inherits = __webpack_require__(4)
-var stream = __webpack_require__(25)
+var stream = __webpack_require__(26)
 
 var rStates = exports.readyStates = {
 	UNSENT: 0,
@@ -22627,13 +22949,13 @@ IncomingMessage.prototype._onXHRProgress = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(3).Buffer, __webpack_require__(2)))
 
 /***/ }),
-/* 63 */
+/* 69 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 64 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22713,7 +23035,7 @@ module.exports = function () {
 }();
 
 /***/ }),
-/* 65 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -22766,13 +23088,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(66);
+__webpack_require__(72);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 66 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -22965,7 +23287,7 @@ exports.clearImmediate = clearImmediate;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
-/* 67 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -23039,7 +23361,7 @@ function config (name) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 68 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23072,7 +23394,7 @@ function config (name) {
 
 module.exports = PassThrough;
 
-var Transform = __webpack_require__(32);
+var Transform = __webpack_require__(33);
 
 /*<replacement>*/
 var util = __webpack_require__(7);
@@ -23092,7 +23414,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 };
 
 /***/ }),
-/* 69 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(3).Buffer
@@ -23125,7 +23447,7 @@ module.exports = function (buf) {
 
 
 /***/ }),
-/* 70 */
+/* 76 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -23150,7 +23472,7 @@ function extend() {
 
 
 /***/ }),
-/* 71 */
+/* 77 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -23220,7 +23542,7 @@ module.exports = {
 
 
 /***/ }),
-/* 72 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23247,8 +23569,8 @@ module.exports = {
 
 
 
-var punycode = __webpack_require__(73);
-var util = __webpack_require__(75);
+var punycode = __webpack_require__(79);
+var util = __webpack_require__(81);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -23323,7 +23645,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(76);
+    querystring = __webpack_require__(82);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -23959,7 +24281,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 73 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -24495,10 +24817,10 @@ Url.prototype.parseHost = function() {
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(74)(module), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(80)(module), __webpack_require__(2)))
 
 /***/ }),
-/* 74 */
+/* 80 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -24526,7 +24848,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 75 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24549,18 +24871,18 @@ module.exports = {
 
 
 /***/ }),
-/* 76 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(77);
-exports.encode = exports.stringify = __webpack_require__(78);
+exports.decode = exports.parse = __webpack_require__(83);
+exports.encode = exports.stringify = __webpack_require__(84);
 
 
 /***/ }),
-/* 77 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24651,7 +24973,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 78 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24743,298 +25065,7 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 79 */
-/***/ (function(module, exports) {
-
-/* eslint-env browser */
-module.exports = typeof self == 'object' ? self.FormData : window.FormData;
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const S = __webpack_require__(22);
-class SongPicker {
-	constructor (server) {
-		this.available;
-		this.server = server
-		this.initAvailable();
-	}
-
-	initAvailable () {
-		
-	}
-
-	getSongList () {
-		if (this.available == null) {
-			return this.requestSongList();
-		} else return Promise.resolve (this.available);
-	}
-
-	requestSongList () {
-		return this.server.GET("/songlist").then((res) => {
-			var songlist = res.msg;
-			this.available = songlist;
-			return Promise.resolve(this.available);
-		})
-	}
-
-	getSong (song) {
-		return this.requestSong (song);
-	}
-
-	requestSong (song) {
-		var url = encodeURI("/songlist/" + song.title + "/" + song.author);
-
-		return this.server.GET(url, null, false)
-		.catch((err) => {
-			console.log ("Error: " + err.msg);
-		})
-	}
-}
-
-module.exports = SongPicker;
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const SongPicker = __webpack_require__ (80);
-const Controller = __webpack_require__ (82);
-const Loading = __webpack_require__ (84);
-const AudioPlayer = __webpack_require__ (85);
-
-class SongPickerController extends Controller {
-	constructor (server, transposer) {
-		super("songpicker");
-
-		this.transposer = transposer;
-		this.songpicker = new SongPicker(server);
-		this.loadingAnimation = new Loading();
-
-		this.canSelectSong;
-		this.playBtn;
-		this.dommeta;
-
-		this.initDom ();
-	}
-
-	start () {
-		super.start();
-		this.showDom();
-	}
-
-	initDom () {
-		this.dommeta = {
-			ul: {
-				songlist: {
-					type: "ul",
-					classList: ["songlist"]
-				}
-			},
-			li: {
-				song: {
-					type: "li",
-					classList: ["song"]
-				},
-
-				title: {
-					type: "p",
-					classList: ["song-title", "song-info"]
-				},
-
-				author: {
-					type: "p",
-					classList: ["song-author", "song-info"]
-				}
-			}
-		}
-		this.canSelectSong = true;
-		this.playBtn = document.getElementById("playbtn");
-	}
-
-	showDom () {
-		var songlistDOM = document.getElementById("songlist");
-		var ulDOM = this.createDOMs(this.dommeta.ul).songlist;
-
-		this.startLoading("Fetching Song List...");
-		this.songpicker.getSongList().then((songlist) => {
-			this.stopLoading();
-			for (var song in songlist) {
-				this.addSongDom(ulDOM, songlist[song]);
-			}
-		})
-		songlistDOM.appendChild(ulDOM);
-	}
-
-	addSongDom (songListDOM, song) {
-		var songDOMs = this.createDOMs(this.dommeta.li);
-		var songDOM = songDOMs.song,
-			titleDOM = songDOMs.title,
-			authorDOM = songDOMs.author;
-
-		titleDOM.innerHTML = song.title;
-		authorDOM.innerHTML = song.author;
-
-		songDOM.appendChild(titleDOM);
-		songDOM.appendChild(authorDOM);
-		songDOM.addEventListener("click", this.makeHandleSongClick(song).bind(this));
-
-		songListDOM.appendChild(songDOM);
-	}
-
-	makeHandleSongClick (song) {
-		return () => {
-			if (!this.canSelectSong) return;
-			this.startLoading("Fetching Song...");
-			this.songpicker.getSong(song).then((res) => {
-				this.setPlayButton (song, res);
-				this.stopLoading();
-			});
-		}
-	}
-
-	setPlayButton (song, res) {
-		if (res == undefined) {
-			console.log ("No Data!"); 
-			return;
-		}
-
-		this.createAudioPlayer (this.playBtn, song, res);
-	}
-
-	createAudioPlayer (target, song, audioData) {
-		var audioEl = AudioPlayer(target, audioData);
-	    this.transposer.songpickerDone(song, audioEl);
-	}
-
-	startLoading (msg) {
-		this.canSelectSong = false;
-		this.loadingAnimation.show(msg);
-		console.log ("Start Loading");
-	}
-
-	stopLoading () {
-		this.canSelectSong = true;
-		this.loadingAnimation.hide();
-		console.log ("Stop Loading");
-	}
-
-}
-
-module.exports = SongPickerController;
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports) {
-
-class Controller {
-	constructor (target) {
-		this.current = false;
-		this.target = document.getElementById(target);
-	}
-
-	start () {
-		if (this.current) {
-			return console.log ("[Controller]: Already Started!");
-		} 
-		this.current = true;
-		this.target.classList.add("current");
-	}
-
-	stop () {
-		if (!this.current) {
-			return console.log ("[Controller]: Not Started!");
-		}
-		this.current = false;
-		this.target.classList.remove("current");
-	}
-
-	createDOMs (doms) {
-		var result = {};
-		var domInfo, dom;
-		for (var id in doms) {
-			domInfo = doms[id];
-			dom = document.createElement(domInfo.type);
-			dom.className = domInfo.classList.join(" ");
-			result[id] = dom;
-		}
-		return result;
-	}
-
-	getButton (id, onClick) {
-		var btn = document.getElementById(id);
-		btn.addEventListener ("click", onClick.bind(this));
-		return btn;
-	}
-}
-
-module.exports = Controller
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const RecorderController = __webpack_require__ (34);
-const SongPickerController = __webpack_require__ (81);
-const AudioPlayer = __webpack_require__ (85);
-const S = __webpack_require__ (22);
-
-class Transposer {
-	constructor () {
-		var server = new S("127.0.0.1", 5000);
-		this.server = server;
-		this.spc = new SongPickerController (server, this);
-		this.spc.start();
-		this.rc = new RecorderController (server, this);
-		this.toTranspose;
-		this.singalongDOM = document.getElementById("singalong");
-	}
-
-	songpickerDone (song, player) {
-		this.toTranspose = song;
-		this.spc.stop();
-		this.rc.start(player);
-	}
-
-	recordingDone (blob) {
-		this.sendAudioBlobToServer(blob);
-	}
-
-	sendAudioBlobToServer (blob) {
-		var author = this.toTranspose.author;
-		var title = this.toTranspose.title;
-
-		var reader = new FileReader();
-		reader.readAsDataURL(blob);
-		reader.addEventListener("load", () => {
-			this.server.POST("/analyse/" + title + "/" + author, reader.result, false)
-			.then(this.handleTransposedSong.bind(this))
-			.then(this.finish.bind(this))
-			.catch((e) => {
-				console.log ("Error: " + e);
-			});
-		})
-	}
-
-	handleTransposedSong (songdata) {
-		var target = document.getElementById("transposed");
-		var audioEl = AudioPlayer(target, songdata);
-		return Promise.resolve();
-	}
-
-	finish () {
-		this.rc.stop();
-		this.singalongDOM.classList.add("current");
-		console.log ("End of workflow");
-	}
-}
-
-module.exports = Transposer;
-
-/***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports) {
 
 class Loading {
@@ -25104,25 +25135,6 @@ class Loading {
 }
 
 module.exports = Loading;
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports) {
-
-module.exports = function (target, audioData) {
-	var blob = new Blob([audioData], {type:"audio/wav"});
-	var url = window.URL.createObjectURL(blob);
-	
-	const audioEl = document.createElement('audio');
-    audioEl.controls = true;
-    const sourceEl = document.createElement('source');
-    sourceEl.src = url;
-    sourceEl.type = 'audio/wav';
-    audioEl.appendChild(sourceEl);
-    target.appendChild(audioEl);
-
-    return audioEl;
-}
 
 /***/ })
 /******/ ]);

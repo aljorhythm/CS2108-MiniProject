@@ -1,6 +1,5 @@
 const SongPicker = require ("./SongPicker.js");
 const Controller = require ("../Controller/Controller.js");
-const Loading = require ("../Components/Loading/Loading.js");
 const AudioPlayer = require ("../Components/AudioPlayer/AudioPlayer.js");
 
 class SongPickerController extends Controller {
@@ -9,7 +8,6 @@ class SongPickerController extends Controller {
 
 		this.transposer = transposer;
 		this.songpicker = new SongPicker(server);
-		this.loadingAnimation = new Loading();
 
 		this.canSelectSong;
 		this.playBtn;
@@ -109,13 +107,13 @@ class SongPickerController extends Controller {
 
 	startLoading (msg) {
 		this.canSelectSong = false;
-		this.loadingAnimation.show(msg);
+		this.transposer.loading(msg);
 		console.log ("Start Loading");
 	}
 
 	stopLoading () {
 		this.canSelectSong = true;
-		this.loadingAnimation.hide();
+		this.transposer.loadend();
 		console.log ("Stop Loading");
 	}
 
