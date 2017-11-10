@@ -3,7 +3,7 @@ from flask_cors import CORS
 import numpy as np
 import urllib
 import base64
-from Transposer import analyseandtranspose
+from transposer import analyseandtranspose
 
 import os
 
@@ -38,10 +38,10 @@ def findsongpath (path, title, author):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
 			sep = filename.find("-") #seperator
 			if author == filename[:sep].strip() and title == filename[sep + 1:].strip():
-				return filename
+				return "%s/%s" % (path, filename)
 
 def findsongdata (path, title, author):
-	songpath = "%s/%s" % (path, findsongpath(path, title, author))
+	songpath = findsongpath(path, title, author)
 	data = open(songpath, "rb").read()
 	return data
 
@@ -65,9 +65,11 @@ def get_shortsong (title, author):
 
 @app.route("/analyse/<title>/<author>", methods=['POST'])
 def post_record(title, author):
-	path = "./tmp/file.wav"
-	writeWavFile(path, request.data)
-	songdata = analyseandtranspose(path, title, author)
+	recording_path = "./tmp/file.wav"
+	songs_path = "./src/songs"
+	original_path = findsongpath(songs_path, title, author);
+	writeWavFile(recording_path, request.data)
+	songdata = analyseandtranspose(recording_path, original_path)
 
 	return songdata
 

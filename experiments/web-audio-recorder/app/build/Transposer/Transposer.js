@@ -1,17 +1,20 @@
 const RecorderController = require ("../Recorder/Recorder.Controller.js");
 const SongPickerController = require ("../SongPicker/SongPicker.Controller.js");
 const AudioPlayer = require ("../Components/AudioPlayer/AudioPlayer.js");
+const Loading = require ("../Components/Loading/Loading.js");
 const S = require ("../Server/Server.js");
 
 class Transposer {
 	constructor () {
 		var server = new S("127.0.0.1", 5000);
 		this.server = server;
+		this.loadingAnimation = new Loading();
+		this.toTranspose;
+		this.singalongDOM = document.getElementById("singalong");
+		
 		this.spc = new SongPickerController (server, this);
 		this.spc.start();
 		this.rc = new RecorderController (server, this);
-		this.toTranspose;
-		this.singalongDOM = document.getElementById("singalong");
 	}
 
 	songpickerDone (song, player) {
@@ -49,7 +52,16 @@ class Transposer {
 	finish () {
 		this.rc.stop();
 		this.singalongDOM.classList.add("current");
+		this.loadend();
 		console.log ("End of workflow");
+	}
+
+	loading (msg) {
+		this.loadingAnimation.show(msg);
+	}
+
+	loadend () {
+		this.loadingAnimation.hide();
 	}
 }
 
