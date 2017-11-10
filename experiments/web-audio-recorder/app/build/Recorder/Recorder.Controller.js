@@ -1,6 +1,6 @@
 const Recorder = require ("./Recorder.js");
 const FD = require ("form-data");
-const Controller = require ("../Controller/Controller.js")
+const Controller = require ("../Controller/Controller.js");
 
 class RecorderController extends Controller {
 	constructor (server, transposer) {
@@ -46,6 +46,7 @@ class RecorderController extends Controller {
 		console.log ("Controller: Stop"); 
 		this.player.pause();
 		
+		this.transposer.loading("Analysing and Transposing...");
 		this.recorder.stop()
 		.then((blob) => {
 			this.createDownloadLink(blob);
