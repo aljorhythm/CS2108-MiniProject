@@ -67,6 +67,18 @@ class TestMidiProperties(unittest.TestCase):
             self.assertTrue(KeyUtils.are_keys_equal(
                 keypair[0], keypair[1]), "{} != {}".format(keypair[0], keypair[1]))
 
+    def test_key_difference(self):
+        differences = [
+            ['Am', 'C', 0],
+            ['C#', 'C', 1],
+            ['G#', 'G', 1],
+        ]
+
+        for difference in differences:
+            res = KeyUtils.key_difference(
+                  difference[0], difference[1])
+            self.assertEqual(res, difference[2], "{} - {} != {} got {} instead".format(difference[0], difference[1], difference[2], res))
+
 
 if __name__ == '__main__':
     unittest.main()
