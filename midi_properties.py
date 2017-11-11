@@ -57,7 +57,8 @@ class KeyUtils():
 
     @staticmethod
     def key_difference(a, b):
-      return KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(a)) - KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(b))
+      res =  KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(a)) - KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(b))
+      return res
 
     @staticmethod
     def get_absolute_pitch(pitch_number):
