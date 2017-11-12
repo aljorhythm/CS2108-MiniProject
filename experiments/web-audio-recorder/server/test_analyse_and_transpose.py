@@ -1,4 +1,4 @@
-from transposerutils import *
+from ... import transposerutils
 
 song = {
   "voice" : 'src/songs/B-ThinkingOutLoud_vocals_original_melodia.mid',
@@ -6,6 +6,6 @@ song = {
   'output_dir' : 'src/transposed'
 }
 
-print findkey(song["voice"])
+print transposerutils.findkey(song["voice"])
 
-print analyseandtranspose(song["voice"], song["original"], song["output_dir"])
+print transposerutils.analyseandtranspose(song["voice"], song["original"], song["output_dir"])
