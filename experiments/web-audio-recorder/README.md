@@ -23,6 +23,13 @@ cd server
 python server.py
 ```
 
+### Transpose all songs
+
+```
+cd server
+python transpose_all.py
+```
+
 ## How To Use
 
 3 Key Steps
