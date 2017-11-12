@@ -8,7 +8,6 @@ import numpy as np
 from midiutil.MidiFile import MIDIFile
 from scipy.signal import medfilt
 import jams
-import __init__
 
 '''
 Extract the melody from an audio file and convert it to MIDI.
