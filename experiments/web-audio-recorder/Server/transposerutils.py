@@ -19,6 +19,7 @@ def findkey(src, method=None):
 	if method == "keyfindercli":
 		key = keyfindercli(src)
 	if method == "filename":
+		src = os.path.basename(src)
 		key = src.split("-")[0]
 	if method == "midiproperties":
 		midi_properties = MidiProperties(src)
@@ -75,12 +76,11 @@ def writeWavFile (path, data):
 	f.close();
 
 def analyseandtranspose (recording_path, original_path, output_dir):
-
-  	original_key = findkey(original_path, "keyfindercli")
+	original_key = findkey(original_path)#"keyfindercli")
 
 	original_filename = os.path.basename(original_path)
 	original_filename_without_key = "".join(original_filename.split("-")[1:])
-	recording_key = findkey(recording_path, "keyfindercli")
+	recording_key = findkey(recording_path)#, "keyfindercli")
 	new_key = recording_key
 	original_filename_without_key_without_ext = ext = os.path.splitext(original_filename_without_key)[0]
 	output_path = "{}/{}-{}.wav".format(output_dir, new_key, original_filename_without_key_without_ext)
@@ -90,8 +90,8 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 
 	steps = -1 * KeyUtils.key_difference(original_key, recording_key)
 	
-	print "Key of Original: {}".format(original_key)	
-	print "Key of Recording: {}".format(recording_key)
+	print "Key of Original '{}': {}".format(original_filename, original_key)	
+	print "Key of Recording '{}': {}".format(recording_path, recording_key)
 	print "Output file:\t {}".format(output_path)
 	print "Steps:\t {}".format(steps)
 	if not os.path.isfile(output_path):
