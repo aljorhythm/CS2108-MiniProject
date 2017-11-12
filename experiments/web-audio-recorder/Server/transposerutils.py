@@ -26,9 +26,6 @@ def findkey(src):
 		key = KeyUtils.get_all_pitches()[key]
 	return key
 
-def readsong (src):
-	return wavfile.read(src)
-
 def keyfindercli (src):
 	return subprocess.check_output(["keyfinder-cli", src]).strip()
 
@@ -40,26 +37,31 @@ def songlist ():
 	filenames = []
 	for filename in os.listdir(path):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
-			sep = filename.find("-") #seperator
-			author = filename[:sep].strip()
-			title = filename[sep + 1:].strip()
+			key, author, title = infofromurl(filename)
 			filenames.append({
-					"author": author,
-					"title": title
-				})
+				"author": author,
+				"title": title,
+				"key": key
+			})
 	return filenames
 
 def findsongpath (path, title, author):
-	for filename in os.listdir(path):
-		if filename.endswith(".wav") or filename.endswith("mp3"):
-			sep = filename.find("-") #seperator
-			if author == filename[:sep].strip() and title == filename[sep + 1:].strip():
-				return "%s/%s" % (path, filename)
+	# Return the path of the song given the title and author from given directory `path`
+		for filename in os.listdir(path):
+			if filename.endswith(".wav") or filename.endswith("mp3"):
+				src_key, src_author, src_title = infofromurl(filename)
+				if author == src_author and title == src_title:
+					return "%s/%s" % (path, filename)
 
-def findsongdata (path, title, author):
-	songpath = findsongpath(path, title, author)
-	data = open(songpath, "rb").read()
-	return data
+def infofromurl (url):
+	return infofromfilename(os.path.basename(url))
+
+def infofromfilename (filename):
+	info = filename.split("-")
+	key = info[0].strip().upper()
+	author = info[1].strip()
+	title = info[2].strip()
+	return key, author, title
 
 def writeWavFile (path, data):
 	f = open(path, "wb+")
@@ -67,7 +69,7 @@ def writeWavFile (path, data):
 	f.close();
 
 def analyseandtranspose (recording_path, original_path, output_dir):
-	original_key = findkey(original_path)
+  	original_key = findkey(original_path)
 	original_filename = os.path.basename(original_path)
 	original_filename_without_key = "".join(original_filename.split("-")[1:])
 	recording_key = findkey(recording_path)

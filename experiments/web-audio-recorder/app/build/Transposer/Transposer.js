@@ -3,6 +3,7 @@ const SongPickerController = require ("../SongPicker/SongPicker.Controller.js");
 const AudioPlayer = require ("../Components/AudioPlayer/AudioPlayer.js");
 const Loading = require ("../Components/Loading/Loading.js");
 const S = require ("../Server/Server.js");
+const path = require ("path");
 
 class Transposer {
 	constructor () {
@@ -34,7 +35,7 @@ class Transposer {
 		var reader = new FileReader();
 		reader.readAsDataURL(blob);
 		reader.addEventListener("load", () => {
-			this.server.POST("/analyse/" + title + "/" + author, reader.result, false)
+			this.server.POST("/analyse/" + title + "/" + author, reader.result)
 			.then(this.handleTransposedSong.bind(this))
 			.then(this.finish.bind(this))
 			.catch((e) => {
@@ -44,8 +45,26 @@ class Transposer {
 	}
 
 	handleTransposedSong (songdata) {
-		var target = document.getElementById("transposed");
-		var audioEl = AudioPlayer(target, songdata);
+
+		var data = songdata.msg,
+
+		original_url = this.server.filepath(data.original.url),
+		original_key = data.original.key,
+
+		transposed_url = this.server.filepath(data.transposed.url),
+		transposed_key = data.transposed.key;
+			
+		var originalDOM = document.getElementById("original");
+		var transposedDOM = document.getElementById("transposed");
+		AudioPlayer(originalDOM, original_url);
+		AudioPlayer(transposedDOM, transposed_url);
+
+
+		var originalKeyDOM = document.getElementById("original-key");
+		var transposedKeyDOM = document.getElementById("transposed-key");
+		originalKeyDOM.innerHTML = original_key;
+		transposedKeyDOM.innerHTML = transposed_key;
+
 		return Promise.resolve();
 	}
 

@@ -5,8 +5,13 @@ class Server {
 	constructor (hostname, port) {
 		this.options = {
 			hostname: hostname,
-			port: port
+			port: port,
+			url: "http://" + hostname + ":" + port
 		}
+	}
+
+	filepath (file) {
+		return this.options.url + file.substr(1);
 	}
 
 	parseUrlParams (params) {
