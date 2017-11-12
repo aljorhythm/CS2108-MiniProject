@@ -62,6 +62,10 @@ def send_tmpfile (file):
 def send_shortsong (file):
 	return send_from_directory(directory="src/songs", filename=file)
 
+@app.route("/src/recordings/<file>", methods=['GET'])
+def send_recording (file):
+	return send_from_directory(directory="src/recordings", filename=file)
+
 @app.route("/src/transposed/<file>", methods=['GET'])
 def send_transposed (file):
 	return send_from_directory(directory="src/transposed", filename=file)
