@@ -59,6 +59,9 @@ class SongPickerController extends Controller {
 		this.songpicker.getSongList().then((songlist) => {
 			this.stopLoading();
 			for (var song in songlist) {
+				for (var key in songlist[song]) {
+					songlist[song]["clean_" + key] = songlist[song][key].replace(/_/g, " "); 
+				}
 				this.addSongDom(ulDOM, songlist[song]);
 			}
 		})
@@ -71,8 +74,8 @@ class SongPickerController extends Controller {
 			titleDOM = songDOMs.title,
 			authorDOM = songDOMs.author;
 
-		titleDOM.innerHTML = song.title.replace("_", " ");
-		authorDOM.innerHTML = song.author.replace("_", " ");
+		titleDOM.innerHTML = song.key + " - " + song.clean_title;
+		authorDOM.innerHTML = song.clean_author;
 
 		songDOM.appendChild(titleDOM);
 		songDOM.appendChild(authorDOM);
@@ -86,6 +89,8 @@ class SongPickerController extends Controller {
 			if (!this.canSelectSong) return;
 			this.startLoading("Fetching Song...");
 			this.songpicker.getSong(song).then((res) => {
+				this.setInnerHTML("picked-song-key", song.key);
+				this.setInnerHTML("picked-song-title", song.clean_title);
 				this.setPlayButton (song, res);
 				this.stopLoading();
 			});
@@ -103,8 +108,11 @@ class SongPickerController extends Controller {
 
 	createAudioPlayer (target, song, audioData) {
 		var url = this.server.filepath(audioData.msg); // this.server.options.url + audioData.msg.substr(1);
-		var audioEl = AudioPlayer(target, url);
-	    this.transposer.songpickerDone(song, audioEl);
+	    this.startLoading("Loading Audio Player...");
+	    return AudioPlayer(target, url).then((audioEl) => {
+	    	this.stopLoading();
+	    	this.transposer.songpickerDone(song, audioEl);
+	    });
 	}
 
 	startLoading (msg) {

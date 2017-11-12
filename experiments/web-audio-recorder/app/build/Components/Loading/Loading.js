@@ -38,6 +38,8 @@ class Loading {
 	}
 
 	show (msg) {
+		this.hide();
+
 		this.message.innerHTML = msg || this.LOADING;
 		var arr = [0,1,2,3,4,5,6,7];
 		var dy = [0,1,2,1,0,-1,-2,-1];
@@ -47,7 +49,6 @@ class Loading {
 				yy = this.HEIGHT + dy[i] * this.Y_GROWTH;
 				h = this.TOP + ((yy + this.HEIGHT) / 2);
 				bar = this.bars[arr[i]];
-				//bar.style.height = yy + "px";
 				bar.style.top = h + "px";
 			}
 			for (i = 0; i < arr.length; i++) {
@@ -59,6 +60,8 @@ class Loading {
 	}
 
 	hide () {
+		if (!this.interval) return;
+
 		clearInterval(this.interval);
 		this.target.classList.remove("show");
 	}

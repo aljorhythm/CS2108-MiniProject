@@ -71,4 +71,4 @@ def post_tuner ():
 	return makeresponse(200, tuner.getkey(request.data))
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True, threaded=True)

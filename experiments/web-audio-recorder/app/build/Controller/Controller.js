@@ -1,8 +1,11 @@
 const Loading = require ("../Components/Loading/Loading.js");
 class Controller {
 	constructor (target) {
+
 		this.current = false;
-		this.target = document.getElementById(target);
+		if (target != null)
+			this.target = document.getElementById(target);
+		this.doms = {}
 	}
 
 	start () {
@@ -37,6 +40,13 @@ class Controller {
 		var btn = document.getElementById(id);
 		btn.addEventListener ("click", onClick.bind(this));
 		return btn;
+	}
+
+	setInnerHTML(id, value) {
+		if (this.doms[id])
+			return this.doms[id].innerHTML = value;
+		var dom = document.getElementById(id);
+		dom.innerHTML = value;
 	}
 }
 
