@@ -156,9 +156,9 @@ class MidiProperties():
 
     def get_similar_keys(self, normalize=False):
         key_similarities = cosine_similarity([self.get_pitch_counts()], KeyUtils.get_keys())[0]
-        keys_sorted_indexes = np.argsort(key_similarities)
-        keys_sorted_indexes = np.flip(keys_sorted_indexes, 0)
-        return (keys_sorted_indexes , [key_similarities[i] for i in keys_sorted_indexes])
+        key_numbers = np.argsort(key_similarities)
+        key_numbers = np.flip(key_numbers, 0)
+        return (key_numbers , [key_similarities[i] for i in key_numbers])
           
 
 
@@ -182,10 +182,10 @@ if __name__ == "__main__":
 
     print [KeyUtils.get_all_pitches()[note] for note in midi_properties.get_notes()]
     print "\nResults"
-    keys_sorted_indexes, key_similarities = midi_properties.get_similar_keys()
+    key_numbers, key_similarities = midi_properties.get_similar_keys()
 
-    print keys_sorted_indexes
+    print key_numbers
     print key_similarities
     for sort_index, key_similarity in enumerate(key_similarities):
-        print "{}\t: {}".format(pitches[keys_sorted_indexes[sort_index]], key_similarity)
+        print "{}\t: {}".format(pitches[key_numbers[sort_index]], key_similarity)
     
