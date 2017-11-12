@@ -72,6 +72,10 @@ class TestMidiProperties(unittest.TestCase):
             ['Am', 'C', 0],
             ['C#', 'C', 1],
             ['G#', 'G', 1],
+            ['D', 'B', 3],
+            ['B', 'D', -4],
+            ['E', 'C', 4],
+            ['F', 'C#', 4],
         ]
 
         for difference in differences:
