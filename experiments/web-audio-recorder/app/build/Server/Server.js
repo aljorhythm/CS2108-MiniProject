@@ -11,7 +11,8 @@ class Server {
 	}
 
 	filepath (file) {
-		return encodeURI(this.options.url + file.substr(1));
+		console.log(encodeURI(file.substr(1)));
+		return this.options.url + file.substr(1).replace("#", "%23");
 	}
 
 	parseUrlParams (params) {
