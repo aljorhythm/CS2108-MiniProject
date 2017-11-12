@@ -1,11 +1,13 @@
 import transposerutils as utils
+import time
 
 def songlist():
 	return utils.songlist()
 	
 def process_recording (title, author, data):
 	output_dir = "./src/transposed"
-	recording_path = "./tmp/file.wav"
+	millis = int(round(time.time() * 1000))	
+	recording_path = "./src/recordings/{}_{}.wav".format(title.replace(' ', '_'), str(millis))
 	songs_path = "./src/songs"
 
 	original_path = utils.findsongpath(songs_path, title, author);
