@@ -1,0 +1,103 @@
+Filename: Pentatonix - Hallelujah.wav
+Original Key: Gm
+	 Steps: 1 - Key: Abm
+
+	 Steps: 2 - Key: Am
+
+	 Steps: 3 - Key: Bbm
+
+	 Steps: 4 - Key: Bm
+
+	 Steps: 5 - Key: Eb
+
+	 Steps: 6 - Key: E
+
+	 Steps: 7 - Key: Dm
+
+	 Steps: 8 - Key: Gb
+
+	 Steps: 9 - Key: Em
+
+	 Steps: 10 - Key: Ab
+
+	 Steps: 11 - Key: A
+
+	 Steps: 12 - Key: Bb
+
+Filename: Joel - e_note.wav
+Original Key: E
+	 Steps: 1 - Key: Fm
+
+	 Steps: 2 - Key: Gb
+
+	 Steps: 3 - Key: G
+
+	 Steps: 4 - Key: Abm
+
+	 Steps: 5 - Key: A
+
+	 Steps: 6 - Key: Bb
+
+	 Steps: 7 - Key: B
+
+	 Steps: 8 - Key: C
+
+	 Steps: 9 - Key: Db
+
+	 Steps: 10 - Key: D
+
+	 Steps: 11 - Key: Eb
+
+	 Steps: 12 - Key: E
+
+Filename: John Mayer - Free Falling.wav
+Original Key: F
+	 Steps: 1 - Key: Gb
+
+	 Steps: 2 - Key: G
+
+	 Steps: 3 - Key: Ab
+
+	 Steps: 4 - Key: A
+
+	 Steps: 5 - Key: Bb
+
+	 Steps: 6 - Key: B
+
+	 Steps: 7 - Key: C
+
+	 Steps: 8 - Key: Db
+
+	 Steps: 9 - Key: D
+
+	 Steps: 10 - Key: Eb
+
+	 Steps: 11 - Key: E
+
+	 Steps: 12 - Key: F
+
+Filename: Eb - fix you.mp3
+Original Key: Eb
+	 Steps: 1 - Key: Abm
+
+	 Steps: 2 - Key: Am
+
+	 Steps: 3 - Key: Gb
+
+	 Steps: 4 - Key: Bm
+
+	 Steps: 5 - Key: Eb
+
+	 Steps: 6 - Key: A
+
+	 Steps: 7 - Key: Bb
+
+	 Steps: 8 - Key: B
+
+	 Steps: 9 - Key: Em
+
+	 Steps: 10 - Key: Db
+
+	 Steps: 11 - Key: D
+
+	 Steps: 12 - Key: Bb
