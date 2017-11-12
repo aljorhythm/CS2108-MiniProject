@@ -4,7 +4,6 @@ import urllib
 import base64
 import os
 import librosa
-<<<<<<< HEAD
 from midi_properties import MidiProperties, KeyUtils
 
 key_detection_tools = {
@@ -32,18 +31,6 @@ def keyfindercli (src):
 
 def parseBase64Audio (data):
 	return data[data.find(",")+1:].decode("base64")
-=======
-
-def findkey (src):
-	key = keyfindercli (src)
-	return key
-
-def keyfindercli (src):
-	return subprocess.check_output(['keyfinder-cli', src]).strip()
-
-def parseBase64Audio (data):
-	return data[data.find(",")+1:].decode('base64')
->>>>>>> 2be2296e8e2223512f68c727fa35109c01ecc323
 
 def songlist ():
 	path = "./src/songs"
