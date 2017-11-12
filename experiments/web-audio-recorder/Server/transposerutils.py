@@ -4,6 +4,8 @@ import urllib
 import base64
 import os
 import librosa
+
+from wavmidi import convert_to_midi
 from midi_properties import MidiProperties, KeyUtils
 
 key_detection_tools = {
@@ -11,11 +13,6 @@ key_detection_tools = {
 	".mp3" : "keyfindercli",
 	".wav" : "filename"
 }
-
-def audio_to_bpm(infile):
-    y, sr = librosa.load(infile)
-    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
-    return int(tempo)
 
 def findkey(src, method=None):
 	ext = os.path.splitext(src)[1]
@@ -90,9 +87,6 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 	new_key = recording_key
 	original_filename_without_key_without_ext = ext = os.path.splitext(original_filename_without_key)[0]
 	output_path = "{}/{}-{}.wav".format(output_dir, new_key, original_filename_without_key_without_ext)
-
-	print original_key
-	print recording_key
 
 	steps = -1 * KeyUtils.key_difference(original_key, recording_key)
 	
