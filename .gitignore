@@ -1,6 +1,7 @@
 */.DS_Store
 data/*.mid
 data/*.mp3
+data/*.wav
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
