@@ -45,9 +45,9 @@ class RecorderController extends Controller {
 	handleStopBtn () { 
 		console.log ("Controller: Stop"); 
 		this.player.pause();
-		
-		this.transposer.loading("Analysing and Transposing...");
-		this.recorder.stop()
+		this.recorder.stop(() => {
+			this.transposer.loading("Analysing and Transposing...");
+		})
 		.then((blob) => {
 			this.createDownloadLink(blob);
 			this.transposer.recordingDone(blob);

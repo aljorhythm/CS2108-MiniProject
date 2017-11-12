@@ -5,7 +5,8 @@ class Server {
 	constructor (hostname, port) {
 		this.options = {
 			hostname: hostname,
-			port: port
+			port: port,
+			url: "http://" + hostname + ":" + port
 		}
 	}
 

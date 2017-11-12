@@ -22,11 +22,20 @@ def get_songlist ():
 
 @app.route("/songlist/<title>/<author>", methods=['GET'])
 def get_shortsong (title, author):
-	return transposer.shortsong(title, author)
+	return makeresponse(200, transposer.shortsong(title, author))
 
 @app.route("/analyse/<title>/<author>", methods=['POST'])
 def post_record(title, author):
-	return transposer.process_recording(title, author, request.data)
+	transposed_url = transposer.process_recording(title, author, request.data)
+	return makeresponse(200, transposed_url)
+
+@app.route("/tmp/<file>", methods=['GET'])
+def send_tmpfile (file):
+	return send_from_directory(directory="tmp", filename=file)
+
+@app.route("/src/songs/<file>", methods=['GET'])
+def send_shortsong (file):
+	return send_from_directory(directory="src/songs", filename=file)
 
 
 

@@ -9,9 +9,6 @@ def findkey (src):
 	key = keyfindercli (src)
 	return key
 
-def readsong (src):
-	return wavfile.read(src)
-
 def keyfindercli (src):
 	return subprocess.check_output(['keyfinder-cli', src]).strip()
 
@@ -23,26 +20,27 @@ def songlist ():
 	filenames = []
 	for filename in os.listdir(path):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
-			sep = filename.find("-") #seperator
+			sep = filename.find("-")
 			author = filename[:sep].strip()
 			title = filename[sep + 1:].strip()
 			filenames.append({
-					"author": author,
-					"title": title
-				})
+				"author": author,
+				"title": title
+			})
 	return filenames
 
 def findsongpath (path, title, author):
-	for filename in os.listdir(path):
-		if filename.endswith(".wav") or filename.endswith("mp3"):
-			sep = filename.find("-") #seperator
-			if author == filename[:sep].strip() and title == filename[sep + 1:].strip():
-				return "%s/%s" % (path, filename)
+	# Return the path of the song given the title and author from given directory `path`
+		for filename in os.listdir(path):
+			if filename.endswith(".wav") or filename.endswith("mp3"):
+				sep = filename.find("-") #seperator
+				if author == filename[:sep].strip() and title == filename[sep + 1:].strip():
+					return "%s/%s" % (path, filename)
 
 def findsongdata (path, title, author):
+	# Returns the song data given title and author from given directory `path`
 	songpath = findsongpath(path, title, author)
-	data = open(songpath, "rb").read()
-	return data
+	return songpath
 
 def writeWavFile (path, data):
 	f = open(path, 'wb+')
@@ -55,7 +53,7 @@ def analyseandtranspose (recording_path, original_path):
 	print ("Key of Recording: %s" % findkey(recording_path))
 	print ("Key of Original: %s" % findkey(original_path))
 	print ("Key of Transposed: %s" % findkey(output))
-	return open(output, "rb").read();
+	return output;
 
 
 def transpose (src, out):
