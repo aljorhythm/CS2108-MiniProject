@@ -75,7 +75,9 @@ def writeWavFile (path, data):
 	f.close();
 
 def analyseandtranspose (recording_path, original_path, output_dir):
+
   	original_key = findkey(original_path, "keyfindercli")
+
 	original_filename = os.path.basename(original_path)
 	original_filename_without_key = "".join(original_filename.split("-")[1:])
 	recording_key = findkey(recording_path, "keyfindercli")
@@ -94,7 +96,7 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 	print "Steps:\t {}".format(steps)
 	if not os.path.isfile(output_path):
 		transpose (original_path, output_path, steps)
-	
+
 	print output_path
 	return {
 		"original_path" : original_path,
