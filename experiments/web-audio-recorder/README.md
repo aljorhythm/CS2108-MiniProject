@@ -1,17 +1,23 @@
 # Web Audio Recorder
 
+## Requirements
+
+``` shell
+pip install flask 
+pip install flask-cors
+pip install transposer
+```
+
 ## Usage
 
-Open 2 Terminal
-
-1st Terminal:
+### API Server
 
 ```
 npm install
 npm run start:dev
 ```
 
-2nd Terminal:
+### Frontend HTML Server
 
 ```
 cd server
@@ -34,7 +40,7 @@ python server.py
 - **[Server]** Use `<title>` & `<author>` to retrieve desired snipet 
 - ***Proceed to Step 2***
 
-### 2. Sing along to `Snipet`
+### 2. Sing along to `Snippet`
 - **[Website]** Create `<audio>` element with song snipet
 - **[User]** Listen and Start singing along
 - **[Website]** Records User's voice upon `Start` till `Stop`
