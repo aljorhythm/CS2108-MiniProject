@@ -1,67 +1,27 @@
-import transposer
+import transposerutils
+import midi_properties
 import os
 from multiprocessing import Process, Manager, Lock
 import time
 
 mutex = Lock()
 
-def task (path, outdir, filename, i, result ):
-	src = "%s/%s" % (path, filename)
-	out = "".join([outdir, "/", os.path.splitext(os.path.basename(src))[0], "_transposed_", str(i), ".wav"])
+def task (output_dir, original_path, new_key, original_key):
+	output_path, steps = transposer.transpose_to_key (output_dir, original_path, new_key, original_key)
+	expected_key = new_key
+	actual_key = transposerutils.findkey(output_path)
 
-	if not os.path.exists(out):
-		transposer.transpose(src, out, i)
-
-	mutex.acquire()
-	if filename not in result:
-		result[filename] = {}
-	if "original-key" not in result[filename]:
-		o = result[filename]
-		o['original-key'] = transposer.findkey(src)
-		result[filename] = o
-	mutex.release()
-
-	mutex.acquire()
-	o = result[filename]
-	o[i] = transposer.findkey(out)
-	result[filename] = o
-	mutex.release()
+	print "Expected: {}\tActual: {}".format(expected_key, actual_key)
 
 def runtest ():
-	path = "./src/songs"
-	outdir = "./src/transposed"
-	manager = Manager()
-	pids = []
-
-	presult = manager.dict()
-	result = {}
-
-	for filename in os.listdir(path):
+	songs_dir = "./src/songs"
+	transposed_dir = "./src/transposed"
+	result = {"correct": 0, "wrong": 0}
+	for filename in os.listdir(songs_dir):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
-			presult[filename] = {}
-			o = presult[filename]
-			o['original-key'] = ""
-
-
-	for filename in os.listdir(path):
-		if filename.endswith(".wav") or filename.endswith("mp3"):
-			for i in range (1,13):
-				pid = Process(target=task, args=(path, outdir, filename, i, presult, ))
-				pids.append(pid)
-				pid.start()
-			
-
-	for pid in pids:
-		pid.join()
-
-	for filename in presult.keys():
-		print " ".join(["Filename:", filename])
-		print " ".join(["Original Key:", presult[filename]['original-key']])
-		for i in presult[filename]:
-			if i == "original-key": 
-				continue;
-			print " ".join(["\t", "Steps:", str(i), "-", "Key:", presult[filename][i]])
-			print ""
+			original_key = transposerutils.findkey("/".join([songs_dir, filename]))
+			for key in midi_properties.pitches
+			task (transposed_dir, filename, key, original_key)
 
 
 if __name__ == '__main__':
