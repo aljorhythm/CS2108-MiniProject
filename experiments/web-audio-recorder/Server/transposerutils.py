@@ -4,19 +4,36 @@ import urllib
 import base64
 import os
 import librosa
+from midi_properties import MidiProperties, KeyUtils
 
-def findkey (src):
-	key = keyfindercli (src)
+key_detection_tools = {
+	".mid" : "midiproperties",
+	".mp3" : "keyfindercli",
+	".wav" : "filename"
+}
+
+def findkey(src):
+	ext = os.path.splitext(src)[1]
+	method = key_detection_tools[ext]
+	if method == "keyfindercli":
+		key = keyfindercli(src)
+	if method == "filename":
+		key = src.split("-")[0]
+	if method == "midiproperties":
+		midi_properties = MidiProperties(src)
+		key_numbers, similarities = midi_properties.get_similar_keys()
+		key = key_numbers[0]
+		key = KeyUtils.get_all_pitches()[key]
 	return key
 
 def readsong (src):
 	return wavfile.read(src)
 
 def keyfindercli (src):
-	return subprocess.check_output(['keyfinder-cli', src]).strip()
+	return subprocess.check_output(["keyfinder-cli", src]).strip()
 
 def parseBase64Audio (data):
-	return data[data.find(",")+1:].decode('base64')
+	return data[data.find(",")+1:].decode("base64")
 
 def songlist ():
 	path = "./src/songs"
@@ -45,20 +62,30 @@ def findsongdata (path, title, author):
 	return data
 
 def writeWavFile (path, data):
-	f = open(path, 'wb+')
+	f = open(path, "wb+")
 	f.write(parseBase64Audio(data))
 	f.close();
 
-def analyseandtranspose (recording_path, original_path):
-	output = './tmp/transposed.wav'
-	transpose (original_path, output)
-	print ("Key of Recording: %s" % findkey(recording_path))
-	print ("Key of Original: %s" % findkey(original_path))
-	print ("Key of Transposed: %s" % findkey(output))
-	return open(output, "rb").read();
+def analyseandtranspose (recording_path, original_path, output_dir):
+	original_key = findkey(original_path)
+	original_filename = os.path.basename(original_path)
+	original_filename_without_key = "".join(original_filename.split("-")[1:])
+	recording_key = findkey(recording_path)
+	new_key = recording_key
+	original_filename_without_key_without_ext = ext = os.path.splitext(original_filename_without_key)[0]
+	output_path = "{}/{}-{}.wav".format(output_dir, new_key, original_filename_without_key_without_ext)
 
+	steps = -1 * KeyUtils.key_difference(original_key, recording_key)
+	
+	print "Key of Original: {}".format(original_key)	
+	print "Key of Recording: {}".format(recording_key)
+	print "Output file:\t {}".format(output_path)
+	print "Steps:\t {}".format(steps)	
+	return transpose (original_path, output_path, steps)
+	
+	# return open(output, "rb").read();
 
-def transpose (src, out):
+def transpose (src, out, steps):
 	y, sr = librosa.load(src)
-	y_third = librosa.effects.pitch_shift(y, sr, n_steps=1)
+	y_third = librosa.effects.pitch_shift(y, sr, steps)
 	librosa.output.write_wav(out, y_third, sr)
