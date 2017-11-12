@@ -12,6 +12,11 @@ key_detection_tools = {
 	".wav" : "filename"
 }
 
+def audio_to_bpm(infile):
+    y, sr = librosa.load(infile)
+    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    return int(tempo)
+
 def findkey(src, method=None):
 	ext = os.path.splitext(src)[1]
 	if method is None:
@@ -76,11 +81,11 @@ def writeWavFile (path, data):
 
 def analyseandtranspose (recording_path, original_path, output_dir):
 
-  	original_key = findkey(original_path, "keyfindercli")
+  	original_key = findkey(original_path)
 
 	original_filename = os.path.basename(original_path)
 	original_filename_without_key = "".join(original_filename.split("-")[1:])
-	recording_key = findkey(recording_path, "keyfindercli")
+	recording_key = findkey(recording_path)
 	new_key = recording_key
 	original_filename_without_key_without_ext = ext = os.path.splitext(original_filename_without_key)[0]
 	output_path = "{}/{}-{}.wav".format(output_dir, new_key, original_filename_without_key_without_ext)

@@ -35,7 +35,11 @@ class Transposer {
 		var reader = new FileReader();
 		reader.readAsDataURL(blob);
 		reader.addEventListener("load", () => {
-			this.server.POST("/analyse/" + title + "/" + author, reader.result)
+			var url = "/analyse/" + title + "/" + author;
+			if (author.length < 1)
+				url = "/analyse/" + title;
+			
+			this.server.POST(url, reader.result)
 			.then(this.handleTransposedSong.bind(this))
 			.then(this.finish.bind(this))
 			.catch((e) => {
