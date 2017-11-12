@@ -11,7 +11,7 @@ class Server {
 	}
 
 	filepath (file) {
-		return this.options.url + file.substr(1);
+		return encodeURI(this.options.url + file.substr(1));
 	}
 
 	parseUrlParams (params) {

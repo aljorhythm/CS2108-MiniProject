@@ -32,6 +32,10 @@ def get_shortsong_withoutauthor (title):
 	url, key = transposer.shortsong(title, author)
 	return makeresponse(200, url)
 
+@app.route("/analyse/<title>", methods=['POST'])
+def post_record_titleonly(title):
+	return post_record(title, "")
+
 @app.route("/analyse/<title>/<author>", methods=['POST'])
 def post_record(title, author):
 	original_url, original_key = transposer.fullsong(title, author)
