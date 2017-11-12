@@ -80,9 +80,15 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 	print "Key of Original: {}".format(original_key)	
 	print "Key of Recording: {}".format(recording_key)
 	print "Output file:\t {}".format(output_path)
-	print "Steps:\t {}".format(steps)	
-	return transpose (original_path, output_path, steps)
-	
+	print "Steps:\t {}".format(steps)
+	if not os.path.isfile(output_path):
+		transpose (original_path, output_path, steps)
+		
+	return {
+		"original_path" : original_path,
+		"output_path" : output_path,
+		"steps" : steps
+	}
 	# return open(output, "rb").read();
 
 def transpose (src, out, steps):
