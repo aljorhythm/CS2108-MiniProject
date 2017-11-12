@@ -5,11 +5,12 @@ import subprocess
 from midi_properties import MidiProperties
 from midi_properties import KeyUtils
 
+
 class TestKeyDetection(unittest.TestCase):
 
     def test_libkeyfinder(self):
-        print "************************************"      
-        
+        print "************************************"
+
         midi_dir = 'data/'
 
         if not os.path.exists(midi_dir):
@@ -20,7 +21,8 @@ class TestKeyDetection(unittest.TestCase):
             for filename in [filename for filename in filelist if filename.endswith('.mp3')]:
                 filepath = midi_dir + filename
                 expected_key = filename.split("-")[0]
-                most_similar_key = subprocess.check_output(['keyfinder-cli', filepath]).strip()
+                most_similar_key = subprocess.check_output(
+                    ['keyfinder-cli', filepath]).strip()
                 if not KeyUtils.are_keys_equal(most_similar_key, expected_key):
                     errors.append({
                         "filepath": filepath,
@@ -36,15 +38,15 @@ class TestKeyDetection(unittest.TestCase):
         print "LibKeyFinder: \t{} correct out of {}, {}%".format(len(success), total, percentage)
         print "Correct Results:\n" + "\n".join(success)
 
-        msg = "\nWrong Results:\n{}" .format("\n".join(["{} :\t expected {},  \tactual {}".format(err["filepath"].ljust(40, ' '), err["expected"], err["results"]) for err in sorted(errors, key = lambda err: err["filepath"])]))
-        self.assertEqual(errors, [], msg = msg)
+        msg = "\nWrong Results:\n{}" .format("\n".join(["{} :\t expected {},  \tactual {}".format(err["filepath"].ljust(
+            40, ' '), err["expected"], err["results"]) for err in sorted(errors, key=lambda err: err["filepath"])]))
+        self.assertEqual(errors, [], msg=msg)
 
         print "************************************\n\n"
 
-
     def test_midi_properties(self):
-        print "************************************"    
-      
+        print "************************************"
+
         midi_dir = 'data/'
 
         if not os.path.exists(midi_dir):
@@ -60,11 +62,12 @@ class TestKeyDetection(unittest.TestCase):
                 most_similar_key = KeyUtils.get_all_pitches()[
                     key_sorted_indexes[0]]
                 if not KeyUtils.are_keys_equal(most_similar_key, expected_key):
-                    results = KeyUtils.pitch_numbers_to_letters(key_sorted_indexes)
+                    results = KeyUtils.pitch_numbers_to_letters(
+                        key_sorted_indexes)
                     errors.append({
                         "filepath": filepath,
                         "results": results,
-                        "incorrect_rank" : results.index(KeyUtils.get_standard_key(expected_key)) + 1,
+                        "incorrect_rank": results.index(KeyUtils.get_standard_key(expected_key)) + 1,
                         "expected_key": expected_key
                     })
                 else:
@@ -76,11 +79,16 @@ class TestKeyDetection(unittest.TestCase):
         print "MidiProperties:\t{} correct out of {}, {}%".format(success_count, total, percentage)
 
         print "Correct Results:\n" + "\n".join(success)
-        msg = "\nWrong Results:\n" + "\n".join(["{} Incorrect rank of {}\t: {},\t{}".format(err["filepath"].ljust(90), err["expected_key"], err["incorrect_rank"], "\t".join(err["results"])) for err in sorted(errors, key = lambda err: err["filepath"])])
-        
-        self.assertEqual(errors, [], msg = msg)
+        msg = "\nWrong Results:\n"
+
+        for err in sorted(errors, key=lambda err: err["filepath"]):
+            msg += "{} Expected {}, \tranked {} instead: {} difference: {}".format(err["filepath"].ljust(80), err["expected_key"].ljust(
+                2), err["incorrect_rank"], " ".join([res.ljust(2) for res in err["results"]]), str(KeyUtils.key_difference(err["expected_key"], err["results"][0]))) + "\n"
+
+        self.assertEqual(errors, [], msg=msg)
 
         print "************************************\n\n"
+
 
 if __name__ == '__main__':
     unittest.main()

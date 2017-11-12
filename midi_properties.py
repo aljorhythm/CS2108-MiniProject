@@ -56,6 +56,11 @@ class KeyUtils():
         print "-------------------------------\n"
 
     @staticmethod
+    def key_difference(a, b):
+      res =  KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(a)) - KeyUtils.get_all_pitches().index(KeyUtils.get_standard_key(b))
+      return res
+
+    @staticmethod
     def get_absolute_pitch(pitch_number):
         # https://newt.phys.unsw.edu.au/jw/notes.html
         # C starts on 24
@@ -158,25 +163,29 @@ class MidiProperties():
 
 
 if __name__ == "__main__":
-    KeyUtils.print_keys()
-    exit()
     parser = argparse.ArgumentParser()
     parser.add_argument("infile", help="Path to input midi file.")
     args = parser.parse_args()
 
     KeyUtils.print_keys()
 
-    midi_properties = MidiProperties(args.infile)
 
-    print "{}\t: {}".format("Pitches\t\t", "\t".join(KeyUtils.get_all_pitches()))
+    print "{}\t: {}".format("All Pitches\t", "\t".join(KeyUtils.get_all_pitches()))
+
+    midi_properties = MidiProperties(args.infile)
+    # song
     print "{}\t: {}".format("Pitch Counts\t", "\t".join([str(p) for p in midi_properties.get_pitch_counts()]))
     print "{}\t: {}".format("Sanitized Counts", "\t".join([str(p) for p in midi_properties.get_sanitized_pitch_counts()]))
     print "{}\t: {}".format("Sanitized pitches", "\t".join([KeyUtils.get_all_pitches()[pitch_number] if pitch_count > 0 else '-' for pitch_number, pitch_count in enumerate(midi_properties.get_sanitized_pitch_counts())]))
 
     # find similarities
 
+    print [KeyUtils.get_all_pitches()[note] for note in midi_properties.get_notes()]
     print "\nResults"
     keys_sorted_indexes, key_similarities = midi_properties.get_similar_keys()
+
+    print keys_sorted_indexes
+    print key_similarities
     for sort_index, key_similarity in enumerate(key_similarities):
         print "{}\t: {}".format(pitches[keys_sorted_indexes[sort_index]], key_similarity)
     
