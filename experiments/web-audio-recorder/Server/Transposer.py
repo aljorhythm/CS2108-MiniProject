@@ -1,27 +1,19 @@
-import transposerutils
-import numpy as np
-import wave
-import subprocess
-import os
-import librosa
+import transposerutils as utils
 
-def analyseandtranspose (recording_path, original_path):
-	output = './tmp/transposed.wav'
-	transpose (original_path, output)
-	print ("Key of Recording: %s" % findkey(recording_path))
-	print ("Key of Original: %s" % findkey(original_path))
-	print ("Key of Transposed: %s" % findkey(output))
-	return open(output, "rb").read();
+def songlist ():
+	return utils.songlist()
 
-def findkey (src):
-	key = transposerutils.keyfindercli (src)
-	return key
+def process_recording (title, author, data):
+	recording_path = "./tmp/file.wav"
+	songs_path = "./src/songs"
+	original_path = utils.findsongpath(songs_path, title, author);
+	utils.writeWavFile(recording_path, data)
+	songdata = utils.analyseandtranspose(recording_path, original_path)
 
-def readsong (src):
-	return wavfile.read(src)
+	return songdata
 
-def transpose (src, out):
-	y, sr = librosa.load(src)
-	y_third = librosa.effects.pitch_shift(y, sr, n_steps=1)
-	librosa.output.write_wav(out, y_third, sr)
+def shortsong (title, author):
+	path = "./src/songs"
+	return utils.findsongdata(path, title, author)
+
 
