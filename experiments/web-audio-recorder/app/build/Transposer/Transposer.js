@@ -52,12 +52,16 @@ class Transposer {
 		original_key = data.original.key,
 
 		transposed_url = this.server.filepath(data.transposed.url),
-		transposed_key = data.transposed.key;
+		transposed_key = data.transposed.key,
+
+		recorded_url = this.server.filepath(data.recording.url)
 			
 		var originalDOM = document.getElementById("original");
 		var transposedDOM = document.getElementById("transposed");
+		var recordedDOM = document.getElementById("recorded");
 		AudioPlayer(originalDOM, original_url);
 		AudioPlayer(transposedDOM, transposed_url);
+		AudioPlayer(recordedDOM, recorded_url);
 
 
 		var originalKeyDOM = document.getElementById("original-key");

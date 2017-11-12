@@ -26,10 +26,16 @@ def get_shortsong (title, author):
 	url, key = transposer.shortsong(title, author)
 	return makeresponse(200, url)
 
+@app.route("/songlist/<title>", methods=['GET'])
+def get_shortsong_withoutauthor (title):
+	author = ""
+	url, key = transposer.shortsong(title, author)
+	return makeresponse(200, url)
+
 @app.route("/analyse/<title>/<author>", methods=['POST'])
 def post_record(title, author):
 	original_url, original_key = transposer.fullsong(title, author)
-	transposed_url, transposed_key = transposer.process_recording(title, author, request.data)
+	recording_url, transposed_url, transposed_key = transposer.process_recording(title, author, request.data)
 	return makeresponse(200, {
 		"original": {
 			"url" : original_url, 
@@ -38,6 +44,9 @@ def post_record(title, author):
 		"transposed": {
 			"url": transposed_url, 
 			"key": transposed_key
+		},
+		"recording": {
+			"url": recording_url
 		}
 	})
 
@@ -48,6 +57,10 @@ def send_tmpfile (file):
 @app.route("/src/songs/<file>", methods=['GET'])
 def send_shortsong (file):
 	return send_from_directory(directory="src/songs", filename=file)
+
+@app.route("/src/transposed/<file>", methods=['GET'])
+def send_transposed (file):
+	return send_from_directory(directory="src/transposed", filename=file)
 
 @app.route("/tuner", methods=['POST'])
 def post_tuner ():

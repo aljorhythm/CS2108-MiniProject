@@ -6,11 +6,12 @@ def songlist ():
 def process_recording (title, author, data):
 	recording_path = "./tmp/file.wav"
 	songs_path = "./src/songs"
-	original_path = utils.findsongpath(songs_path, title, author);
+	output_dir = './src/transposed'
+	original_path = utils.findsongpath(songs_path, title, author)
 	utils.writeWavFile(recording_path, data)
-	output_path, key = utils.analyseandtranspose(recording_path, original_path)
+	info = utils.analyseandtranspose(recording_path, original_path, output_dir)
 
-	return output_path, key
+	return recording_path, info['output_path'], info['key']
 
 def fullsong (title, author):
 	path = "./src/songs"
