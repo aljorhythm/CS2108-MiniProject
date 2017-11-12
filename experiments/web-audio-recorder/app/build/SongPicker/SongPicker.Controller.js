@@ -6,6 +6,7 @@ class SongPickerController extends Controller {
 	constructor (server, transposer) {
 		super("songpicker");
 
+		this.server = server;
 		this.transposer = transposer;
 		this.songpicker = new SongPicker(server);
 
@@ -101,7 +102,8 @@ class SongPickerController extends Controller {
 	}
 
 	createAudioPlayer (target, song, audioData) {
-		var audioEl = AudioPlayer(target, audioData);
+		var url = this.server.options.url + audioData.msg.substr(1);
+		var audioEl = AudioPlayer(target, url);
 	    this.transposer.songpickerDone(song, audioEl);
 	}
 

@@ -11,7 +11,6 @@ class RecorderController extends Controller {
 
 		this.startBtn;
 		this.stopBtn;
-		this.downloadBtn;
 		this.player;
 
 		this.initControllers ();
@@ -27,7 +26,6 @@ class RecorderController extends Controller {
 	initControllers () {
 		this.startBtn = this.getButton ("start", this.handleStartBtn);
 		this.stopBtn = this.getButton ("stop", this.handleStopBtn);
-		this.downloadBtn = this.getButton ("download", this.handleDownloadBtn);
 	}
 
 	handleStartBtn () {
@@ -45,11 +43,10 @@ class RecorderController extends Controller {
 	handleStopBtn () { 
 		console.log ("Controller: Stop"); 
 		this.player.pause();
-		
-		this.transposer.loading("Analysing and Transposing...");
-		this.recorder.stop()
+		this.recorder.stop(() => {
+			this.transposer.loading("Analysing and Transposing...");
+		})
 		.then((blob) => {
-			this.createDownloadLink(blob);
 			this.transposer.recordingDone(blob);
 		})
 		.catch((err) => {
@@ -59,17 +56,6 @@ class RecorderController extends Controller {
 
 	handleDownloadBtn () { console.log ("Download"); }
 
-	createDownloadLink (blob) {
-		// var blob = new Blob (mp3Data, {type: 'audio/mp3'});
-		var url = window.URL.createObjectURL(blob);
-
-		const downloadEl = document.createElement('a');
-	    downloadEl.style = 'display: block';
-	    downloadEl.innerHTML = 'download';
-	    downloadEl.download = 'audio.wav';
-	    downloadEl.href = url;
-	    this.downloadBtn.appendChild(downloadEl);
-	}
 
 	
 }

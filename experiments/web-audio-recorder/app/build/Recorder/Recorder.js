@@ -43,13 +43,13 @@ class Recorder {
 		this.state = RECORDING; 
 		return Promise.resolve();
 	}
-	stop () { 
+	stop (showLoading) { 
 		if (this.state == OFF || this.state == IDLE) 
 			return Promise.reject("Error: Recording have yet started"); 
 
 		// this.stream[0].end();
 		// this.stream[1].end();
-
+		showLoading();
 		this.state = IDLE; 
 		
 		return this.getAudioData("WAV"); 

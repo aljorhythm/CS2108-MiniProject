@@ -101,3 +101,22 @@
 	cursor: pointer;
 }
 .songlist .song:active { box-shadow: inset 0px 0px #DDD; opacity: 0.8; }
+
+/********************
+		TRACK
+********************/
+.track-container {
+	margin-top: 50px;
+	float: left;
+	clear: both;
+}
+
+.track-info div{
+	float: left;
+	height: 40px;
+}
+
+.track-info-key {
+	margin-left: 10px;
+	padding-top: 10px;
+}
