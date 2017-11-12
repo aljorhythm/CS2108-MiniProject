@@ -31,7 +31,7 @@ class SongPicker {
 	requestSong (song) {
 		var url = encodeURI("/songlist/" + song.title + "/" + song.author);
 
-		return this.server.GET(url, null, false)
+		return this.server.GET(url, null)
 		.catch((err) => {
 			console.log ("Error: " + err.msg);
 		})

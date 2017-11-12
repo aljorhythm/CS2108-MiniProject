@@ -8,9 +8,9 @@ def process_recording (title, author, data):
 	songs_path = "./src/songs"
 	original_path = utils.findsongpath(songs_path, title, author);
 	utils.writeWavFile(recording_path, data)
-	songdata = utils.analyseandtranspose(recording_path, original_path)
+	output_path = utils.analyseandtranspose(recording_path, original_path)
 
-	return songdata
+	return output_path
 
 def shortsong (title, author):
 	path = "./src/songs"

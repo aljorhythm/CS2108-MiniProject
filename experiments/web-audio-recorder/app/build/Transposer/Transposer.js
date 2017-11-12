@@ -3,6 +3,7 @@ const SongPickerController = require ("../SongPicker/SongPicker.Controller.js");
 const AudioPlayer = require ("../Components/AudioPlayer/AudioPlayer.js");
 const Loading = require ("../Components/Loading/Loading.js");
 const S = require ("../Server/Server.js");
+const path = require ("path");
 
 class Transposer {
 	constructor () {
@@ -34,7 +35,7 @@ class Transposer {
 		var reader = new FileReader();
 		reader.readAsDataURL(blob);
 		reader.addEventListener("load", () => {
-			this.server.POST("/analyse/" + title + "/" + author, reader.result, false)
+			this.server.POST("/analyse/" + title + "/" + author, reader.result)
 			.then(this.handleTransposedSong.bind(this))
 			.then(this.finish.bind(this))
 			.catch((e) => {
@@ -44,8 +45,9 @@ class Transposer {
 	}
 
 	handleTransposedSong (songdata) {
+		var url = this.server.options.url + songdata.msg.substr(1);
 		var target = document.getElementById("transposed");
-		var audioEl = AudioPlayer(target, songdata);
+		var audioEl = AudioPlayer(target, url);
 		return Promise.resolve();
 	}
 
