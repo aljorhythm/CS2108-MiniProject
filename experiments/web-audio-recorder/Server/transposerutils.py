@@ -42,7 +42,7 @@ def parseBase64Audio (data):
 def songlist ():
 	path = "./src/songs"
 	filenames = []
-	for filename in os.listdir(path):
+	for filename in sorted(os.listdir(path)):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
 			key, author, title = infofromurl(filename)
 			filenames.append({
