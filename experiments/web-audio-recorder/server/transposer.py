@@ -1,6 +1,6 @@
 import transposerutils as utils
 
-def songlist ():
+def songlist():
 	return utils.songlist()
 
 def process_recording (title, author, data):
