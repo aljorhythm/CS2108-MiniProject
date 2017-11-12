@@ -10,6 +10,10 @@ class Server {
 		}
 	}
 
+	filepath (file) {
+		return this.options.url + file.substr(1);
+	}
+
 	parseUrlParams (params) {
 		if (!params) return "";
 

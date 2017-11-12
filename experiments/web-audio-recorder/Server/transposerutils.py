@@ -20,12 +20,11 @@ def songlist ():
 	filenames = []
 	for filename in os.listdir(path):
 		if filename.endswith(".wav") or filename.endswith("mp3"):
-			sep = filename.find("-")
-			author = filename[:sep].strip()
-			title = filename[sep + 1:].strip()
+			key, author, title = infofromurl(filename)
 			filenames.append({
 				"author": author,
-				"title": title
+				"title": title,
+				"key": key
 			})
 	return filenames
 
@@ -33,14 +32,19 @@ def findsongpath (path, title, author):
 	# Return the path of the song given the title and author from given directory `path`
 		for filename in os.listdir(path):
 			if filename.endswith(".wav") or filename.endswith("mp3"):
-				sep = filename.find("-") #seperator
-				if author == filename[:sep].strip() and title == filename[sep + 1:].strip():
+				src_key, src_author, src_title = infofromurl(filename)
+				if author == src_author and title == src_title:
 					return "%s/%s" % (path, filename)
 
-def findsongdata (path, title, author):
-	# Returns the song data given title and author from given directory `path`
-	songpath = findsongpath(path, title, author)
-	return songpath
+def infofromurl (url):
+	return infofromfilename(os.path.basename(url))
+
+def infofromfilename (filename):
+	info = filename.split("-")
+	key = info[0].strip().upper()
+	author = info[1].strip()
+	title = info[2].strip()
+	return key, author, title
 
 def writeWavFile (path, data):
 	f = open(path, 'wb+')
@@ -50,10 +54,11 @@ def writeWavFile (path, data):
 def analyseandtranspose (recording_path, original_path):
 	output = './tmp/transposed.wav'
 	transpose (original_path, output)
+	key = findkey(output)
 	print ("Key of Recording: %s" % findkey(recording_path))
 	print ("Key of Original: %s" % findkey(original_path))
-	print ("Key of Transposed: %s" % findkey(output))
-	return output;
+	print ("Key of Transposed: %s" % key)
+	return output, key
 
 
 def transpose (src, out):

@@ -45,9 +45,26 @@ class Transposer {
 	}
 
 	handleTransposedSong (songdata) {
-		var url = this.server.options.url + songdata.msg.substr(1);
-		var target = document.getElementById("transposed");
-		var audioEl = AudioPlayer(target, url);
+
+		var data = songdata.msg,
+
+		original_url = this.server.filepath(data.original.url),
+		original_key = data.original.key,
+
+		transposed_url = this.server.filepath(data.transposed.url),
+		transposed_key = data.transposed.key;
+			
+		var originalDOM = document.getElementById("original");
+		var transposedDOM = document.getElementById("transposed");
+		AudioPlayer(originalDOM, original_url);
+		AudioPlayer(transposedDOM, transposed_url);
+
+
+		var originalKeyDOM = document.getElementById("original-key");
+		var transposedKeyDOM = document.getElementById("transposed-key");
+		originalKeyDOM.innerHTML = original_key;
+		transposedKeyDOM.innerHTML = transposed_key;
+
 		return Promise.resolve();
 	}
 

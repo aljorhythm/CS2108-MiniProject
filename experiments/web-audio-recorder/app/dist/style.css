@@ -101,3 +101,15 @@
 	cursor: pointer;
 }
 .songlist .song:active { box-shadow: inset 0px 0px #DDD; opacity: 0.8; }
+
+/********************
+		TRACK
+********************/
+.track-info div{
+	float: left;
+}
+
+.track-info-key {
+	padding-top: 10px;
+	margin-left: 10px;
+}
