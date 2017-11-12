@@ -1,6 +1,7 @@
 const Recorder = require ("./Recorder.js");
 const FD = require ("form-data");
 const Controller = require ("../Controller/Controller.js");
+const Loading = require ("../Components/Loading/Loading.js");
 
 class RecorderController extends Controller {
 	constructor (server, transposer) {
@@ -8,6 +9,7 @@ class RecorderController extends Controller {
 
 		this.transposer = transposer;
 		this.recorder = new Recorder ();
+		this.loading = new Loading("recording", 0.5);
 
 		this.startBtn;
 		this.stopBtn;
@@ -35,7 +37,9 @@ class RecorderController extends Controller {
 			console.log("Player Ended! Stopping Recording...");
 			this.stopBtn.click();
 		})
-		this.recorder.start().catch((err) => {
+		this.recorder.start(() => {
+			this.loading.show(" ");
+		}).catch((err) => {
 			console.log(err);
 		});
 	}
@@ -44,6 +48,7 @@ class RecorderController extends Controller {
 		console.log ("Controller: Stop"); 
 		// this.player.pause();
 		this.recorder.stop(() => {
+			this.loading.hide();
 			this.transposer.loading("Analysing and Transposing...");
 		})
 		.then((blob) => {

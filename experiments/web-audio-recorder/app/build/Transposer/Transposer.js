@@ -12,7 +12,7 @@ class Transposer extends Controller{
 
 		var server = new S("127.0.0.1", 5000);
 		this.server = server;
-		this.loadingAnimation = new Loading();
+		this.loadingAnimation = new Loading("loading");
 		this.toTranspose;
 		this.singalongDOM = document.getElementById("singalong");
 		
