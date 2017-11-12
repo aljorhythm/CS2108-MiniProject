@@ -9,10 +9,14 @@ module.exports = function (target, audioData) {
 
 	    audioEl.onloadeddata = () => {
 	    	resolve(audioEl);
-	    }
+      }
+      
+      audioEl.onerror = (err) => {
+        reject(err)
+      }
 
 	    audioEl.onloadstart = () => {
-	    	console.log ("Loading!...");
+	    	console.log ("Loading!...", target);
 	    }
 
 	    audioEl.appendChild(sourceEl);
