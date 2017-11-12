@@ -10,7 +10,7 @@ from midi_properties import MidiProperties, KeyUtils
 
 key_detection_tools = {
 	".mid" : "midiproperties",
-	".mp3" : "keyfindercli",
+	".mp3" : "filename", #"keyfindercli",
 	".wav" : "filename"
 }
 
