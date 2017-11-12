@@ -105,11 +105,18 @@
 /********************
 		TRACK
 ********************/
+.track-container {
+	margin-top: 50px;
+	float: left;
+	clear: both;
+}
+
 .track-info div{
 	float: left;
+	height: 40px;
 }
 
 .track-info-key {
-	padding-top: 10px;
 	margin-left: 10px;
+	padding-top: 10px;
 }
