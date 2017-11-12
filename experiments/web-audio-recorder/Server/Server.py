@@ -2,6 +2,7 @@ from flask import Flask, jsonify, Response, request, jsonify, send_from_director
 from flask_cors import CORS
 
 import transposer
+import tuner
 
 app = Flask(__name__)
 CORS(app)
@@ -48,7 +49,9 @@ def send_tmpfile (file):
 def send_shortsong (file):
 	return send_from_directory(directory="src/songs", filename=file)
 
-
+@app.route("/tuner", methods=['POST'])
+def post_tuner ():
+	return makeresponse(200, tuner.getkey(request.data))
 
 if __name__ == '__main__':
 	app.run(debug=True)

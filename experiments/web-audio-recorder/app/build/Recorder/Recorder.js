@@ -6,12 +6,11 @@ const RECORDING = 1;
 const IDLE = 0;
 
 class Recorder {
-	constructor (server) {
+	constructor () {
 
 		this.state;
 		this.stream;
 		this.streamPromises;
-		this.server = server;
 
 		this.params = {
 			channel: 2,
@@ -49,9 +48,11 @@ class Recorder {
 
 		// this.stream[0].end();
 		// this.stream[1].end();
-		showLoading();
+		if (showLoading)
+			showLoading();
+
 		this.state = IDLE; 
-		
+
 		return this.getAudioData("WAV"); 
 	}
 
@@ -139,8 +140,8 @@ class Recorder {
 			params: this.params
 		})
 		return new Promise ((resolve, reject) => {
-			this.workerPromise = function (mp3Data) {
-				return resolve(mp3Data);
+			this.workerPromise = function (audioData) {
+				return resolve(audioData);
 			}
 		})
 	}

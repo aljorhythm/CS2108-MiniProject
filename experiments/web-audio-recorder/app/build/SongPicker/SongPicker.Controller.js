@@ -71,8 +71,8 @@ class SongPickerController extends Controller {
 			titleDOM = songDOMs.title,
 			authorDOM = songDOMs.author;
 
-		titleDOM.innerHTML = song.title;
-		authorDOM.innerHTML = song.author;
+		titleDOM.innerHTML = song.title.replace("_", " ");
+		authorDOM.innerHTML = song.author.replace("_", " ");
 
 		songDOM.appendChild(titleDOM);
 		songDOM.appendChild(authorDOM);
