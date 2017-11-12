@@ -53,6 +53,9 @@ class Transposer extends Controller{
 
 	handleTransposedSong (songdata) {
 
+		document.getElementById("singalong-title").innerHTML = this.toTranspose.title;
+		document.getElementById("singalong-author").innerHTML = this.toTranspose.author;
+
 		var data = songdata.msg,
 
 		original_url = this.server.filepath(data.original.url),
@@ -84,8 +87,6 @@ class Transposer extends Controller{
 		.then(() => {
 			this.loadend();
 		})
-
-
 
 		
 
