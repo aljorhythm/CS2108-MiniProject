@@ -30,6 +30,9 @@ class SongPicker {
 
 	requestSong (song) {
 		var url = encodeURI("/songlist/" + song.title + "/" + song.author);
+		if (song.author.length < 1)
+			url = encodeURI("/songlist/" + song.title);
+		
 
 		return this.server.GET(url, null)
 		.catch((err) => {

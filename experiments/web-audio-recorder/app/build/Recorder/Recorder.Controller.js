@@ -30,7 +30,7 @@ class RecorderController extends Controller {
 
 	handleStartBtn () {
 		console.log ("Controller: Start"); 
-		this.player.play();
+		// this.player.play();
 		this.player.addEventListener("ended", () => {
 			console.log("Player Ended! Stopping Recording...");
 			this.stopBtn.click();
@@ -42,7 +42,7 @@ class RecorderController extends Controller {
 
 	handleStopBtn () { 
 		console.log ("Controller: Stop"); 
-		this.player.pause();
+		// this.player.pause();
 		this.recorder.stop(() => {
 			this.transposer.loading("Analysing and Transposing...");
 		})
