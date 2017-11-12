@@ -59,8 +59,12 @@ def infofromurl (url):
 def infofromfilename (filename):
 	info = filename.split("-")
 	key = info[0].strip().upper()
-	author = info[1].strip()
-	title = info[2].strip()
+	if len(info) >= 3:
+		author = info[1].strip()
+		title = info[2].strip()
+	else:
+		author = ""
+		title = info[1].strip()
 	return key, author, title
 
 def writeWavFile (path, data):
@@ -69,7 +73,7 @@ def writeWavFile (path, data):
 	f.close();
 
 def analyseandtranspose (recording_path, original_path, output_dir):
-  	original_key = findkey(original_path)
+	original_key = findkey(original_path)
 	original_filename = os.path.basename(original_path)
 	original_filename_without_key = "".join(original_filename.split("-")[1:])
 	recording_key = findkey(recording_path)
@@ -86,11 +90,7 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 	if not os.path.isfile(output_path):
 		transpose (original_path, output_path, steps)
 		
-	return {
-		"original_path" : original_path,
-		"output_path" : output_path,
-		"steps" : steps
-	}
+	return [ output_path, new_key ]
 	# return open(output, "rb").read();
 
 def transpose (src, out, steps):
