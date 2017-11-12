@@ -7,7 +7,7 @@ class RecorderController extends Controller {
 		super("recorder");
 
 		this.transposer = transposer;
-		this.recorder = new Recorder (server);
+		this.recorder = new Recorder ();
 
 		this.startBtn;
 		this.stopBtn;
