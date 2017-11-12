@@ -35,21 +35,24 @@ class Recorder {
 		this.state = IDLE;
 	}
 
-	start () { 
+	start (pre) { 
 		if (this.state == OFF || this.state == RECORDING) 
 			return Promise.reject ("Error: Recording already started"); 
 
+		if (pre)
+			pre();
+		
 		this.state = RECORDING; 
 		return Promise.resolve();
 	}
-	stop (showLoading) { 
+	stop (post) { 
 		if (this.state == OFF || this.state == IDLE) 
 			return Promise.reject("Error: Recording have yet started"); 
 
 		// this.stream[0].end();
 		// this.stream[1].end();
-		if (showLoading)
-			showLoading();
+		if (post)
+			post();
 
 		this.state = IDLE; 
 
