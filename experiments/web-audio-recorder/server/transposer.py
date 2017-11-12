@@ -8,8 +8,13 @@ from subprocess import call
 def songlist():
 	return utils.songlist()
 
+def audio_to_bpm(infile):
+	y, sr = librosa.load(infile)
+	tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+	return int(tempo)
+
 def convert_to_midi(filepath):
-	midi_dir = "./src/songs"
+	midi_dir = "./src/songs/"
 	filepath = os.path.abspath(filepath)
 	filepath_wo_ext = filepath.replace('.wav', '')
 	filename_wo_ext = os.path.basename(filepath_wo_ext)
@@ -30,7 +35,7 @@ def process_recording (title, author, data):
 	original_path = utils.findsongpath(songs_path, title, author);
 	utils.writeWavFile(recording_path, data)
 
-	recording_midi = convert_to_midi(original_path)
+	recording_midi = convert_to_midi(recording_path)
 	info = utils.analyseandtranspose(recording_midi, original_path, output_dir)
 
 	return recording_path, info['output_path'], info['key']

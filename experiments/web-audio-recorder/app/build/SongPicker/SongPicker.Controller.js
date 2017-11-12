@@ -102,7 +102,7 @@ class SongPickerController extends Controller {
 	}
 
 	createAudioPlayer (target, song, audioData) {
-		var url = this.server.options.url + audioData.msg.substr(1);
+		var url = this.server.filepath(audioData.msg); // this.server.options.url + audioData.msg.substr(1);
 		var audioEl = AudioPlayer(target, url);
 	    this.transposer.songpickerDone(song, audioEl);
 	}
