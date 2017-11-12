@@ -25,6 +25,13 @@ pitches = [
             'B'
         ]
 
+hr = "-----------------------------------------------------------------\n"
+hr2 = "******************************************************************\n"
+
+def heading(str):
+  print str.center(len(hr2))
+  print hr2
+
 class KeyUtils():
     @staticmethod
     def get_all_pitches():
@@ -40,20 +47,31 @@ class KeyUtils():
     def print_keys():
         keys = KeyUtils.get_keys()
         pitches = KeyUtils.get_all_pitches()
-        print "key\tnotes"
+
+        heading("Keys")
+        print "Scale"
+        print "{}\t| {}".format("Degree", "\t".join([str(i + 1) for i in range(0, 7)]))        
+        print "Key\t| Notes"
+        
+        print hr
         for key_index in range(0, len(keys)):
             key_letter = pitches[key_index]
-            pitches_numbers = filter(
-                lambda scale_degree: keys[key_index][scale_degree] >= 1, range(len(keys[key_index])))
-            letters = [pitches[pitch_number]
-                       for pitch_number in pitches_numbers]
-            print key_letter + "\t" + "\t ".join(letters)
-        print "-------------------------------\n"
+            key_vector = keys[key_index]
+            letters = [pitches[pitch_number] if pitch_weight > 0 else ""
+                       for pitch_number, pitch_weight in enumerate(key_vector)]
+            letters = np.roll(letters, -key_index)
+            print key_letter + "\t| " + "\t".join(filter(lambda l : l != "", letters))
+        print hr
 
-        print "Weights:\n"
+        heading("Vector (weights)")        
+        print "{}\t|\t {}".format("Pitch Class", "\t".join(KeyUtils.get_all_pitches()))
+        print "Key"
+        print hr
         for key_index in range(0, len(keys)):
-            print "Key {},  \t{} notes with weights: \t {}".format(KeyUtils.get_all_pitches()[key_index], len(filter(lambda weight: weight >= 1, keys[key_index])), "\t".join([str(weight) for weight in keys[key_index]]))
-        print "-------------------------------\n"
+            # print "Key {},\t{} notes, weights: \t {}".format(KeyUtils.get_all_pitches()[key_index].ljust(2), len(filter(lambda weight: weight >= 1, keys[key_index])), "\t".join([str(weight) for weight in keys[key_index]]))
+            print "{}\t\t| \t {}".format(KeyUtils.get_all_pitches()[key_index].ljust(2), "\t".join([str(weight) for weight in keys[key_index]]))
+            
+        print hr
 
     @staticmethod
     def key_difference(a, b):
@@ -176,23 +194,23 @@ if __name__ == "__main__":
 
     KeyUtils.print_keys()
 
-
-    print "{}\t: {}".format("All Pitches\t", "\t".join(KeyUtils.get_all_pitches()))
+    heading("File {}".format(args.infile))            
+    print "{}\t| {}".format("Pitch Class\t", "\t".join(KeyUtils.get_all_pitches()))
 
     midi_properties = MidiProperties(args.infile)
     # song
-    print "{}\t: {}".format("Pitch Counts\t", "\t".join([str(p) for p in midi_properties.get_pitch_counts()]))
-    print "{}\t: {}".format("Sanitized Counts", "\t".join([str(p) for p in midi_properties.get_sanitized_pitch_counts()]))
-    print "{}\t: {}".format("Sanitized pitches", "\t".join([KeyUtils.get_all_pitches()[pitch_number] if pitch_count > 0 else '-' for pitch_number, pitch_count in enumerate(midi_properties.get_sanitized_pitch_counts())]))
+    print "{}\t| {}".format("Pitch Counts\t", "\t".join([str(p) for p in midi_properties.get_pitch_counts()]))
+    print "{}\t| {}".format("Sanitized Counts", "\t".join([str(p) for p in midi_properties.get_sanitized_pitch_counts()]))
+    print "{}\t| {}".format("Sanitized pitches", "\t".join([KeyUtils.get_all_pitches()[pitch_number] if pitch_count > 0 else '-' for pitch_number, pitch_count in enumerate(midi_properties.get_sanitized_pitch_counts())]))
 
     # find similarities
 
-    print [KeyUtils.get_all_pitches()[note] for note in midi_properties.get_notes()]
+    # print [KeyUtils.get_all_pitches()[note] for note in midi_properties.get_notes()]
     print "\nResults"
     key_numbers, key_similarities = midi_properties.get_similar_keys()
 
-    print key_numbers
-    print key_similarities
+    # print key_numbers
+    # print key_similarities
     for sort_index, key_similarity in enumerate(key_similarities):
-        print "{}\t: {}".format(pitches[key_numbers[sort_index]], key_similarity)
+        print "{}\t| {}".format(pitches[key_numbers[sort_index]], key_similarity)
     
