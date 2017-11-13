@@ -98,7 +98,7 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 	original_key = findkey(original_path) #"keyfindercli")
 	recording_key = findkey(recording_path) #, "keyfindercli")
 
-	output_path, steps = transpose_to_key (output_dir, original_path, recording_key, original_key)
+	output_path, steps = transpose_to_key (output_dir, recording_path, original_path, recording_key, original_key)
 
 	return {
 		"original_path" : original_path,
@@ -107,13 +107,14 @@ def analyseandtranspose (recording_path, original_path, output_dir):
 		"key" : recording_key
 	}
 
-def transpose_to_key (output_dir, original_path, new_key, original_key):
+def transpose_to_key (output_dir, recording_path, original_path, new_key, original_key):
 	output_path = transposed_output_path (output_dir, new_key, original_path)
 	steps = calculate_transpose_steps (original_key, new_key)
 	transpose (original_path, output_path, steps)
 
 	print "\n=================== Analyse and Transpose Log ==================="
 	print "Key of Original '{}': {}".format(os.path.basename(original_path), original_key)	
+	print "Recording File	: {}".format(recording_path)	
 	print "Key of Recording : {}".format(new_key)
 	print "Output file:\t {}".format(output_path)
 	print "Steps:\t {}".format(steps)

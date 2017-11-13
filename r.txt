@@ -1,0 +1,96 @@
+****************************************************************
+
+libkeyfinder
+
+
+data/D#-fix_you_original.mp3 True
+data/D-perfect_one_direction_original.mp3 False
+data/A#-hallelujah_pentatonix_original.mp3 True
+data/G-pengyou_original.mp3 True
+data/B-ThinkingOutLoud_vocals_original.mp3 False
+data/D#-fix_you_vocals_original.mp3 True
+data/E-ain't_it_fun_vocals_original.mp3 False
+data/G#-Perfect_vocals_original.mp3 True
+data/D-oneD_perfect_vocals_original.mp3 True
+data/C-xiaowei_original.mp3 True
+data/D-ThinkingOutLoud_vocals_original.mp3 False
+data/E-aint_it_fun_original.mp3 True
+data/G-heathens_original.mp3 True
+data/G-1_2_3_5_sing.mp3 False
+data/G-heathens_vocals_original.mp3 True
+data/C-do-a-deer_sing.mp3 False
+data/A-Wonderwall_vocals_original.mp3 True
+data/C-major-triad_sing.mp3 False
+data/C-scale_sing.mp3 True
+data/D-ThinkingOutLoud_original.mp3 True
+data/A-wonderwall_original.mp3 True
+data/G#-photograph_sing.mp3 True
+data/F-Somebody_That_I_Used_To_Know_vocals_original.mp3 False
+
+success	failure	total	percentage%
+15	8	23	65.2173913043%
+
+****************************************************************
+
+waon -> midi_properties
+
+
+data/A#-hallelujah_pentatonix_original_waon.mid True
+data/D-ThinkingOutLoud_vocals_original_waon.mid True
+data/G-heathens_original_waon.mid False
+data/D#-fix_you_vocals_original_waon.mid True
+data/E-aint_it_fun_original_waon.mid True
+data/G-1_2_3_5_sing_waon.mid False
+data/E-ain't_it_fun_vocals_original_waon.mid True
+data/C-do-a-deer_sing_waon.mid True
+data/A-Wonderwall_vocals_original_waon.mid False
+data/F-Somebody_That_I_Used_To_Know_vocals_original_waon.mid True
+data/G-heathens_vocals_original_waon.mid True
+data/C-scale_sing_waon.mid False
+data/D-perfect_one_direction_original_waon.mid False
+data/D-ThinkingOutLoud_original_waon.mid True
+data/D#-fix_you_original_waon.mid True
+data/D-oneD_perfect_vocals_original_waon.mid False
+data/G-pengyou_original_waon.mid True
+data/G#-photograph_sing_waon.mid True
+data/A-wonderwall_original_waon.mid False
+data/B-ThinkingOutLoud_vocals_original_waon.mid True
+data/G#-Perfect_vocals_original_waon.mid False
+data/C-major-triad_sing_waon.mid True
+data/C-xiaowei_original_waon.mid True
+
+success	failure	total	percentage%
+15	8	23	65.2173913043%
+
+****************************************************************
+
+melodia -> midi_properties
+
+
+data/D#-fix_you_vocals_original_melodia.mid True
+data/D#-fix_you_original_melodia.mid True
+data/G#-photograph_sing_melodia.mid True
+data/C-major-triad_sing_melodia.mid True
+data/D-oneD_perfect_vocals_original_melodia.mid False
+data/C-scale_sing_melodia.mid True
+data/D-perfect_one_direction_original_melodia.mid True
+data/C-xiaowei_original_melodia.mid True
+data/D-ThinkingOutLoud_original_melodia.mid True
+data/G#-Perfect_vocals_original_melodia.mid True
+data/G-1_2_3_5_sing_melodia.mid True
+data/A-wonderwall_original_melodia.mid True
+data/G-pengyou_original_melodia.mid False
+data/E-aint_it_fun_original_melodia.mid True
+data/D-ThinkingOutLoud_vocals_original_melodia.mid True
+data/B-ThinkingOutLoud_vocals_original_melodia.mid True
+data/A#-hallelujah_pentatonix_original_melodia.mid True
+data/G-heathens_original_melodia.mid False
+data/F-Somebody_That_I_Used_To_Know_vocals_original_melodia.mid True
+data/A-Wonderwall_vocals_original_melodia.mid True
+data/E-ain't_it_fun_vocals_original_melodia.mid True
+data/C-do-a-deer_sing_melodia.mid True
+data/G-heathens_vocals_original_melodia.mid True
+
+success	failure	total	percentage%
+20	3	23	86.9565217391%
+
