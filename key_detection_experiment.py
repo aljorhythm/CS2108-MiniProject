@@ -11,25 +11,50 @@ def keylibfinder(filepath):
 
 
 def format_results(results):
+
+    print "****************************************************************\n"
+    print "libkeyfinder"    
+    print 
     libkeyfinder_results = filter(lambda r : r["library"] == 'libkeyfinder', results)
+    print
+    print "\n".join(map(lambda r: r["filepath"], libkeyfinder_results))
+    print
     libkeyfinder_success = filter(lambda r: r["expected"] == r["actual"], libkeyfinder_results)
     libkeyfinder_failures = filter(lambda r: r["expected"] != r["actual"], libkeyfinder_results)
 
-    print len(libkeyfinder_success), len(libkeyfinder_failures), len(libkeyfinder_results), len(libkeyfinder_success)  * 100.0 / len(libkeyfinder_results)
+    print "{}\t{}\t{}\t{}%".format("success", "failure", "total", "percentage")
+    print "{}\t{}\t{}\t{}%".format(len(libkeyfinder_success), len(libkeyfinder_failures), len(libkeyfinder_results), len(libkeyfinder_success)  * 100.0 / len(libkeyfinder_results))
+    print
 
+    print "****************************************************************\n"
+    print "waon -> midi_properties"
+    print 
     waon_results = filter(lambda r: 'waon' in r["filepath"], results)
     midi_properties_results = filter(lambda r : r["library"] == 'midi_properties', waon_results)
+    print
+    print "\n".join(map(lambda r: r["filepath"], midi_properties_results))
+    print
     midi_properties_success = filter(lambda r: r["expected"] == r["actual"], midi_properties_results)
     midi_properties_failures = filter(lambda r: r["expected"] != r["actual"], midi_properties_results)
 
-    print len(midi_properties_success), len(midi_properties_failures), len(midi_properties_results), len(midi_properties_success)  * 100.0 / len(midi_properties_results)
+    print "{}\t{}\t{}\t{}%".format("success", "failure", "total", "percentage")
+    print "{}\t{}\t{}\t{}%".format(len(midi_properties_success), len(midi_properties_failures), len(midi_properties_results), len(midi_properties_success)  * 100.0 / len(midi_properties_results))
+    print
 
+    print "****************************************************************\n"
+    print "melodia -> midi_properties"
+    print 
     melodia_results = filter(lambda r: 'melodia' in r["filepath"], results)
     midi_properties_results = filter(lambda r : r["library"] == 'midi_properties', melodia_results)
+    print
+    print "\n".join(map(lambda r: r["filepath"], midi_properties_results))
+    print
     midi_properties_success = filter(lambda r: r["expected"] == r["actual"], midi_properties_results)
     midi_properties_failures = filter(lambda r: r["expected"] != r["actual"], midi_properties_results)
 
-    print len(midi_properties_success), len(midi_properties_failures), len(midi_properties_results), len(midi_properties_success)  * 100.0 / len(midi_properties_results)
+    print "{}\t{}\t{}\t{}%".format("success", "failure", "total", "percentage")
+    print "{}\t{}\t{}\t{}%".format(len(midi_properties_success), len(midi_properties_failures), len(midi_properties_results), len(midi_properties_success)  * 100.0 / len(midi_properties_results))
+    print
 
 results_filename = 'results.txt'
 if os.path.isfile(results_filename):
