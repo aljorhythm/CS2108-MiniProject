@@ -17,7 +17,7 @@ def format_results(results):
     print 
     libkeyfinder_results = filter(lambda r : r["library"] == 'libkeyfinder', results)
     print
-    print "\n".join(map(lambda r: r["filepath"], libkeyfinder_results))
+    print "\n".join(map(lambda r: r["filepath"]   + " " + str(r["expected"] == r["actual"]), libkeyfinder_results))
     print
     libkeyfinder_success = filter(lambda r: r["expected"] == r["actual"], libkeyfinder_results)
     libkeyfinder_failures = filter(lambda r: r["expected"] != r["actual"], libkeyfinder_results)
@@ -32,7 +32,7 @@ def format_results(results):
     waon_results = filter(lambda r: 'waon' in r["filepath"], results)
     midi_properties_results = filter(lambda r : r["library"] == 'midi_properties', waon_results)
     print
-    print "\n".join(map(lambda r: r["filepath"], midi_properties_results))
+    print "\n".join(map(lambda r: r["filepath"]   + " " + str(r["expected"] == r["actual"]), midi_properties_results))
     print
     midi_properties_success = filter(lambda r: r["expected"] == r["actual"], midi_properties_results)
     midi_properties_failures = filter(lambda r: r["expected"] != r["actual"], midi_properties_results)
@@ -47,7 +47,7 @@ def format_results(results):
     melodia_results = filter(lambda r: 'melodia' in r["filepath"], results)
     midi_properties_results = filter(lambda r : r["library"] == 'midi_properties', melodia_results)
     print
-    print "\n".join(map(lambda r: r["filepath"], midi_properties_results))
+    print "\n".join(map(lambda r: r["filepath"]   + " " + str(r["expected"] == r["actual"]), midi_properties_results))
     print
     midi_properties_success = filter(lambda r: r["expected"] == r["actual"], midi_properties_results)
     midi_properties_failures = filter(lambda r: r["expected"] != r["actual"], midi_properties_results)
